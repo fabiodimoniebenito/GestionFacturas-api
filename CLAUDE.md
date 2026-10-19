@@ -59,6 +59,7 @@ Root package: `com.fabio.GestionFacturas`
 ```
 domain
 ├── gasto      -> Gasto (optional nullable clienteId), EstadoGasto, GastoInvalidoException,
+│                 GastoNoEncontradoException, GastoEstadoInvalidoException,
 │                 FacturaTextParser, DatosFacturaExtraidos
 ├── ingreso    -> Ingreso, EstadoCobro (PENDIENTE/COBRADA), IngresoInvalidoException,
 │                 CobroInvalidoException, IngresoNoEncontradoException
@@ -66,7 +67,7 @@ domain
 │                 ClienteNoEncontradoException
 ├── dashboard  -> ResumenPeriodo, CalculadoraResumenPeriodo, RentabilidadCliente,
 │                 CalculadoraRentabilidadClientes, PendientesCobro (+ its calculator/helper)
-├── categoria  -> Categoria
+├── categoria  -> Categoria, CategoriaNoEncontradaException
 ├── usuario    -> Usuario, RefreshToken, EmailYaRegistradoException,
 │                 CredencialesInvalidadException  (note: existing typo "Invalidad")
 └── shared     -> Dinero (value object)
@@ -95,12 +96,25 @@ infrastructure
 ## Domain modules
 
 - **gasto**: expenses (money out). Manual or OCR digitization. Optional nullable clienteId.
+  Endpoints: POST/GET /api/gastos, GET /api/gastos/{id}, POST /api/gastos/digitalizar,
+  PUT /api/gastos/{id} (EditarGastoUseCase), POST /api/gastos/{id}/revisar (RevisarGastoUseCase).
+  State rules live in the domain (EstadoGasto: BORRADOR, PROCESADA, REVISADA, EXPORTADA):
+    - `actualizar(...)` replaces the editable fields (emisor, fecha, base, iva, total, cliente,
+      categoria, deducible) and never changes estado; amounts must be >= 0 and total is
+      mandatory (GastoInvalidoException); EXPORTADA cannot be edited (GastoEstadoInvalidoException).
+    - `revisar()`: BORRADOR/PROCESADA -> REVISADA; from REVISADA/EXPORTADA ->
+      GastoEstadoInvalidoException; needs fechaEmision and total (GastoInvalidoException).
+      `revisar(categoriaId, deducible)` applies the same rules.
+    - EditarGastoService: another user's gasto = GastoNoEncontradoException; categoriaId must
+      exist (global catalog); clienteId is re-validated (exists/own/active, shared helper
+      ValidacionClienteGasto) only when it changes; null clears it.
 - **ingreso**: income (money in) — invoices issued to a client. clienteId is MANDATORY
   (never null). estadoCobro (PENDIENTE/COBRADA), fechaCobro. Payment marked MANUALLY.
   Transitions registrarCobro/revertirCobro live in the domain with their rules.
 - **cliente**: the user's clients. Soft delete via `activo`.
 - **usuario**: identity + JWT auth.
-- **categoria**: expense categories (read-only catalog).
+- **categoria**: expense categories (read-only catalog). Seeded by V8 (11 basic categories,
+  all `deducible_defecto = false`; the app must not suggest anything fiscal).
 - **dashboard**: read-only aggregation views over gasto/ingreso/cliente — no own table.
   Three views:
     - **Resumen de periodo** (`CalculadoraResumenPeriodo`): given period-filtered gastos and
@@ -166,6 +180,8 @@ data. Do not silently "fix" this without diagnosing the actual root cause and re
 - CobroInvalidoException -> 409
 - CredencialesInvalidadException -> 401
 - ClienteNoEncontradoException / IngresoNoEncontradoException -> 404
+- GastoNoEncontradoException / CategoriaNoEncontradaException -> 404
+- GastoEstadoInvalidoException (edit/review not allowed in the current estado) -> 409
 
 ## Code conventions
 - No ternary operators; explicit ifs. Constructor injection only.
@@ -178,7 +194,7 @@ data. Do not silently "fix" this without diagnosing the actual root cause and re
 
 ## Database
 - Schema owned by Flyway (ddl-auto: validate). Migrations: V1 init, V2 seed usuario,
-  V3 refresh_token, V4 gasto referencia_archivo, V5 cliente, V6 ingreso, V7 gasto cliente_id.
+  V3 refresh_token, V4 gasto referencia_archivo, V5 cliente, V6 ingreso, V7 gasto cliente_id, V8 seed categorias.
 - Do NOT edit applied migrations; add a new V{n}.
 - Config via .env (EnvFile plugin in IntelliJ). Never hardcode secrets.
 

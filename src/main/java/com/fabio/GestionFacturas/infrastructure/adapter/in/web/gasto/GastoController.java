@@ -4,8 +4,11 @@ import com.fabio.GestionFacturas.application.gasto.port.in.ConsultarGastosUseCas
 import com.fabio.GestionFacturas.application.gasto.port.in.CrearGastoUseCase;
 import com.fabio.GestionFacturas.application.gasto.port.in.DigitalizarFacturaUseCase;
 import com.fabio.GestionFacturas.application.gasto.port.in.DigitalizarFacturaUseCase.ComandoDigitalizarFactura;
+import com.fabio.GestionFacturas.application.gasto.port.in.EditarGastoUseCase;
+import com.fabio.GestionFacturas.application.gasto.port.in.RevisarGastoUseCase;
 import com.fabio.GestionFacturas.domain.gasto.Gasto;
 import com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto.dto.CrearGastoRequest;
+import com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto.dto.EditarGastoRequest;
 import com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto.dto.GastoResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,12 +47,17 @@ public class GastoController {
     private final CrearGastoUseCase crearGastoUseCase;
     private final ConsultarGastosUseCase consultarGastosUseCase;
     private final DigitalizarFacturaUseCase digitalizarFacturaUseCase;
+    private final EditarGastoUseCase editarGastoUseCase;
+    private final RevisarGastoUseCase revisarGastoUseCase;
 
     public GastoController(CrearGastoUseCase crearGastoUseCase, ConsultarGastosUseCase consultarGastosUseCase,
-                           DigitalizarFacturaUseCase digitalizarFacturaUseCase) {
+                           DigitalizarFacturaUseCase digitalizarFacturaUseCase,
+                           EditarGastoUseCase editarGastoUseCase, RevisarGastoUseCase revisarGastoUseCase) {
         this.crearGastoUseCase = crearGastoUseCase;
         this.consultarGastosUseCase = consultarGastosUseCase;
         this.digitalizarFacturaUseCase = digitalizarFacturaUseCase;
+        this.editarGastoUseCase = editarGastoUseCase;
+        this.revisarGastoUseCase = revisarGastoUseCase;
     }
 
     // request DTO -> command -> CrearGastoUseCase (port) -> CrearGastoService -> domain Gasto -> response DTO
@@ -77,7 +86,21 @@ public class GastoController {
         return ResponseEntity.ok(GastoWebMapper.aRespuesta(gasto.get()));
     }
 
-    @PostMapping(path = "/digitalizar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping("/{id}")
+    public GastoResponse editar(@PathVariable Long id,
+                                @Valid @RequestBody EditarGastoRequest request,
+                                @AuthenticationPrincipal Long usuarioId) {
+        Gasto gasto = editarGastoUseCase.editar(GastoWebMapper.aComando(request, id, usuarioId));
+        return GastoWebMapper.aRespuesta(gasto);
+    }
+
+    @PostMapping("/{id}/revisar")
+    public GastoResponse revisar(@PathVariable Long id, @AuthenticationPrincipal Long usuarioId) {
+        Gasto gasto = revisarGastoUseCase.revisar(id, usuarioId);
+        return GastoWebMapper.aRespuesta(gasto);
+    }
+
+    @PostMapping(path = "/digitalizar",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<GastoResponse> digitalizar(@RequestParam("archivo") MultipartFile archivo,
                                                       @AuthenticationPrincipal Long usuarioId) {
         if (archivo.isEmpty()) {
