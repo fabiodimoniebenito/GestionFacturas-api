@@ -123,6 +123,8 @@ comprobadas a mano):
 
 - Contraseñas con **BCrypt**. Autenticación **JWT**: access token corto + refresh token
   revocable (hash SHA-256 en BD). Logout real. Control de acceso por `usuarioId`.
+- Los endpoints protegidos responden **401** con cuerpo JSON `{"error":"..."}` y cabecera
+  `WWW-Authenticate: Bearer` si el token falta, es inválido o ha caducado.
 - **Rate limiting** (Bucket4j, en memoria): login 10/min por IP, registro 5/hora por IP,
   resto de endpoints 50/min por usuario. Supera el límite → HTTP 429 con `Retry-After`.
 
