@@ -89,7 +89,8 @@ infrastructure
 └── config                  -> DomainBeansConfig, SecurityConfig,
                                 config/ratelimit (RateLimitFilter),
                                 config/security (JwtTokenProvider, JwtAuthenticationFilter,
-                                OpenApiConfig, RefreshTokenGenerador)
+                                RestAuthenticationEntryPoint, OpenApiConfig,
+                                RefreshTokenGenerador)
 ```
 
 ## Domain modules
@@ -141,6 +142,9 @@ data. Do not silently "fix" this without diagnosing the actual root cause and re
   revocado=true. No rotation yet (deferred).
 - SecurityConfig: stateless, CSRF disabled. Public: /api/auth/**, /api/health,
   springdoc/swagger. Else authenticated.
+- Protected endpoints answer 401 with a JSON body `{"error":"..."}` and a
+  `WWW-Authenticate: Bearer` header when the token is missing, invalid or expired
+  (`RestAuthenticationEntryPoint`, registered in SecurityConfig; it never says why).
 
 ### Rate limiting (Bucket4j, in-memory)
 - `RateLimitFilter` (config/ratelimit), registered via addFilterAfter(rateLimitFilter,
@@ -165,6 +169,8 @@ data. Do not silently "fix" this without diagnosing the actual root cause and re
 - EmailYaRegistradoException / ClienteDuplicadoException -> 409
 - CobroInvalidoException -> 409
 - CredencialesInvalidadException -> 401
+- Missing/invalid/expired token on a protected route -> 401, handled by
+  RestAuthenticationEntryPoint (Spring Security level, not GlobalExceptionHandler)
 - ClienteNoEncontradoException / IngresoNoEncontradoException -> 404
 
 ## Code conventions

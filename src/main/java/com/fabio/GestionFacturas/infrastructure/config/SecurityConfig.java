@@ -2,16 +2,15 @@ package com.fabio.GestionFacturas.infrastructure.config;
 
 import com.fabio.GestionFacturas.infrastructure.config.ratelimit.RateLimitFilter;
 import com.fabio.GestionFacturas.infrastructure.config.security.JwtAuthenticationFilter;
+import com.fabio.GestionFacturas.infrastructure.config.security.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 
@@ -29,11 +28,15 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final RateLimitFilter rateLimitFilter;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, RateLimitFilter rateLimitFilter) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+                          RateLimitFilter rateLimitFilter,
+                          RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.rateLimitFilter = rateLimitFilter;
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
     }
 
     @Bean
@@ -59,10 +62,11 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                // No/invalid token -> 401 (Spring's default here would be 403). An authenticated user
-                // denied access still gets 403 from the default access-denied handler.
+                // No/invalid token -> 401 with a JSON error body and WWW-Authenticate: Bearer (Spring's
+                // default here would be 403). An authenticated user denied access still gets 403 from the
+                // default access-denied handler.
                 .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        .authenticationEntryPoint(restAuthenticationEntryPoint)
                 )
                 // Runs our JWT check before Spring's own form-login filter, since there's no login form here
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
