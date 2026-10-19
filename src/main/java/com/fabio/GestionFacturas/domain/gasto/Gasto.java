@@ -15,7 +15,7 @@ public class Gasto {
     private final Long id;
     private final Long usuarioId;
     private Long categoriaId;
-    private final Long clienteId;
+    private Long clienteId;
     private String emisor;
     private LocalDate fechaEmision;
     private Dinero baseImponible;
@@ -79,9 +79,60 @@ public class Gasto {
 
     /** User confirms/corrects the category and deductibility, moving the expense out of BORRADOR. */
     public void revisar(Long categoriaId, boolean deducible) {
+        validarRevisable();
         this.categoriaId = categoriaId;
         this.deducible = deducible;
         this.estado = EstadoGasto.REVISADA;
+    }
+
+    /** User confirms the data as it is: BORRADOR/PROCESADA -> REVISADA, only if fecha and total are present. */
+    public void revisar() {
+        validarRevisable();
+        this.estado = EstadoGasto.REVISADA;
+    }
+
+    /**
+     * Replaces the user-editable fields; estado is left untouched. Everything is validated before
+     * anything is assigned, so a rejected edit never leaves the Gasto half-modified.
+     */
+    public void actualizar(String emisor, LocalDate fechaEmision, Dinero baseImponible, Dinero iva, Dinero total,
+                           Long clienteId, Long categoriaId, boolean deducible) {
+        if (estado == EstadoGasto.EXPORTADA) {
+            throw new GastoEstadoInvalidoException("Un gasto exportado no se puede editar");
+        }
+        if (total == null) {
+            throw new GastoInvalidoException("El total es obligatorio");
+        }
+        validarNoNegativo(baseImponible, "La base imponible");
+        validarNoNegativo(iva, "El IVA");
+        validarNoNegativo(total, "El total");
+
+        this.emisor = emisor;
+        this.fechaEmision = fechaEmision;
+        this.baseImponible = baseImponible;
+        this.iva = iva;
+        this.total = total;
+        this.clienteId = clienteId;
+        this.categoriaId = categoriaId;
+        this.deducible = deducible;
+    }
+
+    private void validarRevisable() {
+        if (estado == EstadoGasto.REVISADA || estado == EstadoGasto.EXPORTADA) {
+            throw new GastoEstadoInvalidoException("El gasto no se puede revisar en estado " + estado);
+        }
+        if (fechaEmision == null) {
+            throw new GastoInvalidoException("El gasto necesita fecha de emisión para revisarse");
+        }
+        if (total == null) {
+            throw new GastoInvalidoException("El gasto necesita total para revisarse");
+        }
+    }
+
+    private void validarNoNegativo(Dinero dinero, String campo) {
+        if (dinero != null && dinero.cantidad().signum() < 0) {
+            throw new GastoInvalidoException(campo + " no puede ser negativo");
+        }
     }
 
     public Long getId() { return id; }

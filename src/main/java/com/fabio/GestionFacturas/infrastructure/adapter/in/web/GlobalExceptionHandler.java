@@ -1,9 +1,12 @@
 package com.fabio.GestionFacturas.infrastructure.adapter.in.web;
 
+import com.fabio.GestionFacturas.domain.categoria.CategoriaNoEncontradaException;
 import com.fabio.GestionFacturas.domain.cliente.ClienteDuplicadoException;
 import com.fabio.GestionFacturas.domain.cliente.ClienteInvalidoException;
 import com.fabio.GestionFacturas.domain.cliente.ClienteNoEncontradoException;
+import com.fabio.GestionFacturas.domain.gasto.GastoEstadoInvalidoException;
 import com.fabio.GestionFacturas.domain.gasto.GastoInvalidoException;
+import com.fabio.GestionFacturas.domain.gasto.GastoNoEncontradoException;
 import com.fabio.GestionFacturas.domain.ingreso.IngresoInvalidoException;
 import com.fabio.GestionFacturas.domain.ingreso.IngresoNoEncontradoException;
 import com.fabio.GestionFacturas.domain.usuario.CredencialesInvalidadException;
@@ -31,6 +34,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GastoInvalidoException.class)
     public ResponseEntity<Map<String, String>> handleGastoInvalido(GastoInvalidoException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler({GastoNoEncontradoException.class, CategoriaNoEncontradaException.class})
+    public ResponseEntity<Map<String, String>> handleGastoOCategoriaNoEncontrado(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));  // 404
+    }
+
+    @ExceptionHandler(GastoEstadoInvalidoException.class)
+    public ResponseEntity<Map<String, String>> handleGastoEstadoInvalido(GastoEstadoInvalidoException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", ex.getMessage()));  // 409
     }
 
     @ExceptionHandler(IngresoInvalidoException.class)
