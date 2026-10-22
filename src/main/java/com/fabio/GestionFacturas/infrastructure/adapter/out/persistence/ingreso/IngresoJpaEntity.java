@@ -8,11 +8,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Persistence model for Ingreso — a plain JPA entity, separate from the domain {@link
- * com.fabio.GestionFacturas.domain.ingreso.Ingreso}. {@code IngresoMapper} converts between the
- * two; this class never leaves the persistence adapter. {@code @Enumerated(STRING)} stores
- * {@code estadoCobro} as readable text in the DB instead of an ordinal, so column values survive
- * enum reordering.
+ * Modelo de persistencia de Ingreso: entidad JPA simple, separada del
+ * {@link com.fabio.GestionFacturas.domain.ingreso.Ingreso} de dominio. {@code IngresoMapper} convierte entre ambos;
+ * esta clase nunca sale del adapter de persistencia. {@code @Enumerated(STRING)} guarda
+ * {@code estadoCobro} como texto legible en la BD y no como ordinal, así los valores sobreviven a reordenar el enum.
  */
 @Entity
 @Table(name = "ingreso")
@@ -40,7 +39,7 @@ public class IngresoJpaEntity {
 
     private BigDecimal total;
 
-    // One shared currency column for all three Dinero amounts (base/iva/total) — see IngresoMapper
+    // Una sola columna de moneda compartida por los tres importes Dinero (base/iva/total); ver IngresoMapper
     @Column(nullable = false)
     private String moneda;
 
@@ -54,7 +53,7 @@ public class IngresoJpaEntity {
     @Column(name = "creado_en", nullable = false)
     private LocalDateTime creadoEn;
 
-    /** No-args constructor required by JPA/Hibernate to instantiate entities via reflection. */
+    /** Constructor sin argumentos que JPA/Hibernate necesita para instanciar entidades por reflexión. */
     public IngresoJpaEntity() {
     }
 

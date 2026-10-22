@@ -4,13 +4,13 @@ import com.fabio.GestionFacturas.domain.usuario.Usuario;
 import com.fabio.GestionFacturas.domain.usuario.Usuario;
 
 
-/** Inbound port for sign-up. Implemented by {@code RegistrarUsuarioService}, called by {@code AuthController}. */
+/** Puerto de entrada para el registro. Lo implementa {@code RegistrarUsuarioService}, invocado por {@code AuthController}. */
 public interface RegistrarUsuarioUseCase {
 
 
     Usuario registrar (ComandoRegistrar comando);
 
-    /** Raw password travels in this command only as far as the service, which hashes it before storing. */
+    /** La contraseña en claro solo viaja en este comando hasta el service, que la hashea antes de guardarla. */
     record ComandoRegistrar(String email, String nombre, String password){}
 
 

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-/** Implements the read-side {@link ConsultarIngresosUseCase}, backed by {@link IngresoRepositoryPort}. */
+/** Implementa {@link ConsultarIngresosUseCase} (lectura) sobre {@link IngresoRepositoryPort}. */
 @Service
 public class ConsultarIngresosService implements ConsultarIngresosUseCase {
 
@@ -32,7 +32,7 @@ public class ConsultarIngresosService implements ConsultarIngresosUseCase {
         if (ingreso.isEmpty()) {
             return Optional.empty();
         }
-        // Access control: an ingreso that exists but belongs to someone else is reported as absent, not forbidden
+        // Control de acceso: un ingreso de otro usuario se devuelve como inexistente, no como prohibido
         if (!ingreso.get().getUsuarioId().equals(usuarioId)) {
             return Optional.empty();
         }

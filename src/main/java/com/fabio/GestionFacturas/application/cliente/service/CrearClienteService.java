@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/** Implements {@link CrearClienteUseCase}. */
+/** Implementa {@link CrearClienteUseCase}. */
 @Service
 public class CrearClienteService implements CrearClienteUseCase {
 

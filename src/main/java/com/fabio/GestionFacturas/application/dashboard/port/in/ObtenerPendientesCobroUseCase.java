@@ -2,7 +2,7 @@ package com.fabio.GestionFacturas.application.dashboard.port.in;
 
 import com.fabio.GestionFacturas.domain.dashboard.PendientesCobro;
 
-/** Inbound port for the dashboard's pending-collection list. Implemented by {@code PendientesCobroService}. */
+/** Puerto de entrada para la lista de pendientes de cobro del dashboard. Lo implementa {@code PendientesCobroService}. */
 public interface ObtenerPendientesCobroUseCase {
 
     PendientesCobro obtenerPendientes(ComandoObtenerPendientesCobro comando);

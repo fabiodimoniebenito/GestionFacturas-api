@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Implements {@link ObtenerResumenPeriodoUseCase}: thin orchestration — loads the user's gastos and
- * ingresos for the period and delegates every figure to the domain {@link CalculadoraResumenPeriodo}.
+ * Implementa {@link ObtenerResumenPeriodoUseCase}: carga los gastos e ingresos del usuario en el
+ * periodo y delega todas las cifras en {@link CalculadoraResumenPeriodo}.
  */
 @Service
 public class ResumenPeriodoService implements ObtenerResumenPeriodoUseCase {

@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.infrastructure.adapter.in.web.usuario.dto;
 
-/** Response DTO for the registered user — deliberately excludes the password hash. */
+/** DTO de respuesta del usuario registrado; excluye a propósito el hash de la contraseña. */
 public record UsuarioResponse(
 
         Long id,

@@ -13,7 +13,7 @@ import com.fabio.GestionFacturas.infrastructure.adapter.in.web.dashboard.dto.Res
 import java.math.BigDecimal;
 import java.util.List;
 
-/** Converts dashboard domain results into their web DTOs, so domain objects never cross the HTTP boundary. */
+/** Convierte los resultados de dominio del dashboard en DTOs web, para que los objetos de dominio no crucen la frontera HTTP. */
 public class DashboardWebMapper {
 
     private DashboardWebMapper() {
@@ -58,7 +58,7 @@ public class DashboardWebMapper {
                 cantidadONull(ingreso.getTotal()));
     }
 
-    /** Ingreso amounts can be null in the domain; they stay null in the response. */
+    /** Los importes del ingreso pueden ser null en el dominio; en la respuesta se mantienen null. */
     private static BigDecimal cantidadONull(Dinero dinero) {
         if (dinero == null) {
             return null;

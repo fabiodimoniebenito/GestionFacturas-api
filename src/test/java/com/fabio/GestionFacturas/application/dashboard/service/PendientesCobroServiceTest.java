@@ -20,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for PendientesCobroService: orchestration only — the sum rules live in CalculadoraPendientesCobroTest. */
+/** Tests unitarios de PendientesCobroService: solo la orquestación; las reglas de suma están en CalculadoraPendientesCobroTest. */
 @ExtendWith(MockitoExtension.class)
 class PendientesCobroServiceTest {
 

@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Translates domain/validation exceptions into HTTP responses — the one place that does this
- * mapping. The domain layer only ever throws plain exceptions and never knows about HTTP status
- * codes; {@code @RestControllerAdvice} intercepts them across every controller automatically.
+ * Traduce las excepciones de dominio y de validación a respuestas HTTP; es el único sitio que lo hace.
+ * El dominio solo lanza excepciones normales y no conoce los códigos HTTP;
+ * {@code @RestControllerAdvice} las intercepta en todos los controllers.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

@@ -8,11 +8,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Persistence model for Gasto — a plain JPA entity, separate from the domain {@link
- * com.fabio.GestionFacturas.domain.gasto.Gasto}. {@code GastoMapper} converts between the two;
- * this class never leaves the persistence adapter. {@code @Enumerated(STRING)} stores
- * {@code estado} as readable text in the DB instead of an ordinal, so column values survive
- * enum reordering.
+ * Modelo de persistencia de Gasto: entidad JPA simple, separada del
+ * {@link com.fabio.GestionFacturas.domain.gasto.Gasto} de dominio. {@code GastoMapper} convierte entre ambos;
+ * esta clase nunca sale del adapter de persistencia. {@code @Enumerated(STRING)} guarda
+ * {@code estado} como texto legible en la BD y no como ordinal, así los valores sobreviven a reordenar el enum.
  */
 @Entity
 @Table(name = "gasto")
@@ -47,7 +46,7 @@ public class GastoJpaEntity {
     @Column(name = "referencia_archivo")
     private String referenciaArchivo;
 
-    // One shared currency column for all three Dinero amounts (base/iva/total) — see GastoMapper
+    // Una sola columna de moneda compartida por los tres importes Dinero (base/iva/total); ver GastoMapper
     @Column(nullable = false)
     private String moneda;
 
@@ -61,7 +60,7 @@ public class GastoJpaEntity {
     @Column(name = "creado_en", nullable = false)
     private LocalDateTime creadoEn;
 
-    /** No-args constructor required by JPA/Hibernate to instantiate entities via reflection. */
+    /** Constructor sin argumentos que JPA/Hibernate necesita para instanciar entidades por reflexión. */
     public GastoJpaEntity() {
 
 

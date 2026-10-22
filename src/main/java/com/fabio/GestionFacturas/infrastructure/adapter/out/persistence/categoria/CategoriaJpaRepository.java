@@ -2,6 +2,6 @@ package com.fabio.GestionFacturas.infrastructure.adapter.out.persistence.categor
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/** Spring Data repository; standard CRUD is enough here, no custom queries needed. */
+/** Repositorio Spring Data; con el CRUD estándar basta, sin consultas propias. */
 public interface CategoriaJpaRepository extends JpaRepository<CategoriaJpaEntity, Long> {
 }

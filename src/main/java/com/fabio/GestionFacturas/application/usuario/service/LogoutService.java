@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * Implements {@link LogoutUseCase}, called from {@code AuthController}. Hashes the
- * presented token to find it via {@link RefreshTokenRepositoryPort}, then flips
- * {@code revocado} and saves — a silent no-op if the token isn't found, since logout
- * on an already-invalid token shouldn't surface as an error to the client.
+ * Implementa {@link LogoutUseCase}, invocado desde {@code AuthController}. Hashea el token recibido,
+ * lo busca con {@link RefreshTokenRepositoryPort}, marca {@code revocado} y guarda. Si no lo encuentra
+ * no hace nada: un logout con un token ya inválido no debe devolver error al cliente.
  */
 @Service
 public class LogoutService implements LogoutUseCase {

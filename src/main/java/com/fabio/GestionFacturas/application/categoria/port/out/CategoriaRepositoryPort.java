@@ -5,7 +5,7 @@ import com.fabio.GestionFacturas.domain.categoria.Categoria;
 import java.util.List;
 import java.util.Optional;
 
-/** Outbound port implemented by {@code CategoriaPersistenceAdapter} (JPA) in infrastructure. */
+/** Puerto de salida implementado en infraestructura por {@code CategoriaPersistenceAdapter} (JPA). */
 public interface CategoriaRepositoryPort {
 
     List<Categoria> buscarTodas();

@@ -2,7 +2,7 @@ package com.fabio.GestionFacturas.infrastructure.adapter.out.persistence.categor
 
 import com.fabio.GestionFacturas.domain.categoria.Categoria;
 
-/** Converts between domain {@link Categoria} and {@link CategoriaJpaEntity}; used only by {@code CategoriaPersistenceAdapter}. */
+/** Convierte entre la {@link Categoria} de dominio y {@link CategoriaJpaEntity}; solo lo usa {@code CategoriaPersistenceAdapter}. */
 public class CategoriaMapper {
 
     public CategoriaMapper() {

@@ -9,8 +9,8 @@ import com.fabio.GestionFacturas.infrastructure.adapter.in.web.ingreso.dto.Ingre
 import java.math.BigDecimal;
 
 /**
- * Converts between web DTOs and the domain {@link Ingreso} — the boundary that keeps the
- * three models (DTO / domain / JPA entity) separate. Static/stateless: no port dependency, pure mapping.
+ * Convierte entre los DTOs web y el {@link Ingreso} de dominio; es la frontera que mantiene separados
+ * los tres modelos (DTO / dominio / entidad JPA). Sin estado ni dependencias: solo mapeo.
  */
 public class IngresoWebMapper {
 
@@ -56,8 +56,8 @@ public class IngresoWebMapper {
         return dinero.cantidad();
     }
 
-    // Response has one top-level "moneda" field even though each Dinero carries its own currency;
-    // falls back through total -> base -> EUR since a fresh ingreso may have neither amount yet.
+    // La respuesta tiene un único campo "moneda" aunque cada Dinero lleve la suya;
+    // se usa total -> base -> EUR, porque un ingreso recién creado puede no tener ningún importe.
     private static String extraerMoneda(Ingreso ingreso) {
         Dinero total = ingreso.getTotal();
         if (total != null) {

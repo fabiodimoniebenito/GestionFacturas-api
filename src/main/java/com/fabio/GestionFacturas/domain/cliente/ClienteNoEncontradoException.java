@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.domain.cliente;
 
-/** Thrown when a Cliente does not exist or does not belong to the requesting user. Mapped to HTTP 404 by GlobalExceptionHandler. */
+/** Se lanza cuando el Cliente no existe o no pertenece al usuario. GlobalExceptionHandler la mapea a HTTP 404. */
 public class ClienteNoEncontradoException extends RuntimeException {
     public ClienteNoEncontradoException(String message) {
         super(message);

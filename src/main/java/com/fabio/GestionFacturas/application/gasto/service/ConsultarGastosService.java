@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-/** Implements the read-side {@link ConsultarGastosUseCase}, backed by {@link GastoRepositoryPort}. */
+/** Implementa {@link ConsultarGastosUseCase} (lectura) sobre {@link GastoRepositoryPort}. */
 @Service
 public class
 ConsultarGastosService implements ConsultarGastosUseCase {
@@ -22,7 +22,7 @@ ConsultarGastosService implements ConsultarGastosUseCase {
     }
 
     @Override
-    @Transactional(readOnly = true) // hints the DB driver/JPA no dirty-checking or write locks are needed
+    @Transactional(readOnly = true) // indica que no se necesita dirty-checking ni bloqueos de escritura
     public List<Gasto> listarPorUsuario(Long usuarioId) {
         return gastoRepository.buscarPorUsuario(usuarioId);
     }
@@ -34,7 +34,7 @@ ConsultarGastosService implements ConsultarGastosUseCase {
         if (gasto.isEmpty()){
             return Optional.empty();
         }
-        // Access control: a gasto that exists but belongs to someone else is reported as absent, not forbidden
+        // Control de acceso: un gasto de otro usuario se devuelve como inexistente, no como prohibido
         if (!gasto.get().getUsuarioId().equals(usuarioId)){
             return Optional.empty();
         }

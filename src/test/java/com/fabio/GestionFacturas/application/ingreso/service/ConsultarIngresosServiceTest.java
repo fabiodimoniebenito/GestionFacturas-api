@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for ConsultarIngresosService, notably the access-control rule (empty for someone else's ingreso). */
+/** Tests unitarios de ConsultarIngresosService, sobre todo la regla de control de acceso (vacío si el ingreso es de otro usuario). */
 @ExtendWith(MockitoExtension.class)
 class ConsultarIngresosServiceTest {
 

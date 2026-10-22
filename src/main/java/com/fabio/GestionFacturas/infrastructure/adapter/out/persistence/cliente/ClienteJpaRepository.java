@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-/** Spring Data repository; only used by {@code ClientePersistenceAdapter}. */
+/** Repositorio Spring Data; solo lo usa {@code ClientePersistenceAdapter}. */
 public interface ClienteJpaRepository extends JpaRepository<ClienteJpaEntity, Long> {
 
-    // Spring Data derives the query from the method name — no SQL/JPQL written here
+    // Spring Data deriva la consulta del nombre del método: no hay SQL/JPQL escrito aquí
     List<ClienteJpaEntity> findByUsuarioIdAndActivoTrue(Long usuarioId);
 
     Optional<ClienteJpaEntity> findByUsuarioIdAndNif(Long usuarioId, String nif);

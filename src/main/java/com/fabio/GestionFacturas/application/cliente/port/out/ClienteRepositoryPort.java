@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Outbound port for Cliente persistence. Defined here (application layer) so services depend
- * only on this contract; {@code ClientePersistenceAdapter} (infrastructure) implements it with
- * JPA, keeping the dependency pointing inward per the hexagonal dependency rule.
+ * Puerto de salida para la persistencia de Cliente. Está en la capa de aplicación para que los services
+ * dependan solo de este contrato; {@code ClientePersistenceAdapter} (infraestructura) lo implementa con JPA.
  */
 public interface ClienteRepositoryPort {
 
@@ -16,9 +15,9 @@ public interface ClienteRepositoryPort {
 
     Optional<Cliente> buscarPorId(Long id);
 
-    /** Only active clients — inactive ones are excluded by the adapter's query, not filtered here. */
+    /** Solo clientes activos: la consulta del adapter ya excluye los inactivos. */
     List<Cliente> buscarPorUsuario(Long usuarioId);
 
-    /** Used to enforce the one-NIF-per-user rule before creating a new client. */
+    /** Permite aplicar la regla de un NIF por usuario antes de crear un cliente. */
     Optional<Cliente> buscarPorUsuarioYNif(Long usuarioId, String nif);
 }

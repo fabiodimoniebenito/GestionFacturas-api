@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.infrastructure.adapter.in.web.categoria.dto;
 
-/** Response DTO for the category listing endpoint. */
+/** DTO de respuesta del listado de categorías. */
 public record CategoriaResponse(
         Long id,
         String nombre,

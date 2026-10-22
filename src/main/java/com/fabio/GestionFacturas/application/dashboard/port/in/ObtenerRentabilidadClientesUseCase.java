@@ -5,7 +5,7 @@ import com.fabio.GestionFacturas.domain.dashboard.RentabilidadCliente;
 import java.time.LocalDate;
 import java.util.List;
 
-/** Inbound port for the dashboard's per-client profitability. Implemented by {@code RentabilidadClientesService}. */
+/** Puerto de entrada para la rentabilidad por cliente del dashboard. Lo implementa {@code RentabilidadClientesService}. */
 public interface ObtenerRentabilidadClientesUseCase {
 
     List<RentabilidadCliente> obtenerRentabilidad(ComandoObtenerRentabilidad comando);

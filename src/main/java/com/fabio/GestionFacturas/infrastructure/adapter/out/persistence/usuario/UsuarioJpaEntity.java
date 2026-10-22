@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
-/** Persistence model for Usuario — mapped to/from the domain object by {@code UsuarioMapper}. */
+/** Modelo de persistencia de Usuario; {@code UsuarioMapper} lo convierte desde y hacia el objeto de dominio. */
 @Entity
 @Table(name = "usuario")
 public class UsuarioJpaEntity {
@@ -21,18 +21,18 @@ public class UsuarioJpaEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Column named "password" but always holds the BCrypt hash — the raw password never reaches this class
+    // La columna se llama "password" pero siempre contiene el hash BCrypt: la contraseña en claro nunca llega a esta clase
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(nullable = false)
     private String nombre;
 
-    // insertable/updatable = false: set once by a DB default, never written from the Java side
+    // insertable/updatable = false: lo fija un valor por defecto de la BD y nunca se escribe desde Java
     @Column(name = "creado_en", insertable = false, updatable = false)
     private LocalDateTime creadoEn;
 
-    /** No-args constructor required by JPA/Hibernate. */
+    /** Constructor sin argumentos exigido por JPA/Hibernate. */
     protected UsuarioJpaEntity() {
     }
 

@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Implements {@link ObtenerRentabilidadClientesUseCase}: thin orchestration — loads the user's gastos and
- * ingresos for the period and delegates the per-client figures to the domain {@link CalculadoraRentabilidadClientes}.
+ * Implementa {@link ObtenerRentabilidadClientesUseCase}: carga los gastos e ingresos del usuario en el
+ * periodo y delega las cifras por cliente en {@link CalculadoraRentabilidadClientes}.
  */
 @Service
 public class RentabilidadClientesService implements ObtenerRentabilidadClientesUseCase {

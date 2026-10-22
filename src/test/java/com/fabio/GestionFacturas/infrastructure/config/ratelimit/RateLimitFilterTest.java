@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.*;
 
 
 /**
- * Unit tests for RateLimitFilter, constructed directly (no Spring context). The SecurityContext is
- * populated the same way JwtAuthenticationFilter does it (principal = Long user id), so these tests
- * guard the per-user limit on authenticated routes as well as the per-IP limits on login/register.
- * Buckets are private, so everything is asserted through the HTTP status the filter produces.
+ * Tests unitarios de RateLimitFilter, construido directamente (sin contexto de Spring). El SecurityContext
+ * se rellena igual que lo hace JwtAuthenticationFilter (principal = id de usuario Long), así los tests
+ * protegen tanto el límite por usuario en rutas autenticadas como los límites por IP de login y registro.
+ * Los buckets son privados, por lo que todo se comprueba a través del estado HTTP que produce el filtro.
  */
 class RateLimitFilterTest {
 
@@ -124,7 +124,7 @@ class RateLimitFilterTest {
     }
 
 
-    /** Sends {@code veces} requests and asserts every one of them gets through (200). */
+    /** Envía {@code veces} peticiones y comprueba que todas pasan (200). */
     private void agotar(int veces, String metodo, String ruta, String ip) throws Exception {
         for (int i = 1; i <= veces; i++) {
             assertThat(ejecutar(metodo, ruta, ip).getStatus())
@@ -143,7 +143,7 @@ class RateLimitFilterTest {
         return response;
     }
 
-    // Same principal shape JwtAuthenticationFilter puts in the SecurityContext
+    // Mismo tipo de principal que JwtAuthenticationFilter guarda en el SecurityContext
     private void autenticarComo(Long usuarioId){
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(usuarioId, null, List.of()));

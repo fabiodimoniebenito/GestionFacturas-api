@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.infrastructure.adapter.out.storage;
 
-/** Thrown by {@link LocalStorageAdapter} on I/O failure. Mapped by GlobalExceptionHandler to HTTP 500. */
+/** Se lanza desde {@link LocalStorageAdapter} ante un fallo de E/S. GlobalExceptionHandler la mapea a HTTP 500. */
 public class FileStorageException extends RuntimeException {
 
     public FileStorageException(String message) {

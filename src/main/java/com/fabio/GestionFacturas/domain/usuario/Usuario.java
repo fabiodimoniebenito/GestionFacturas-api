@@ -2,7 +2,7 @@ package com.fabio.GestionFacturas.domain.usuario;
 
 import java.util.Objects;
 
-/** App user/account. Holds only the BCrypt hash — the raw password never reaches the domain. */
+/** Usuario/cuenta de la app. Solo guarda el hash BCrypt: la contraseña en claro nunca llega al dominio. */
 public class Usuario {
 
     private final Long id;

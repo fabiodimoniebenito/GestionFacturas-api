@@ -3,8 +3,8 @@ package com.fabio.GestionFacturas.infrastructure.adapter.out.persistence.cliente
 import com.fabio.GestionFacturas.domain.cliente.Cliente;
 
 /**
- * Converts between the domain {@link Cliente} and {@link ClienteJpaEntity} — the third of the
- * three models (DTO / domain / JPA entity), used only by {@code ClientePersistenceAdapter}.
+ * Convierte entre el {@link Cliente} de dominio y {@link ClienteJpaEntity}: el tercero de los
+ * tres modelos (DTO / dominio / entidad JPA). Solo lo usa {@code ClientePersistenceAdapter}.
  */
 public class ClienteMapper {
 

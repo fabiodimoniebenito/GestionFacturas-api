@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.domain.ingreso;
 
-/** Payment state of an Ingreso: whether the invoice issued to the client has been collected. */
+/** Estado de cobro de un Ingreso: indica si la factura emitida al cliente ya se ha cobrado. */
 public enum EstadoCobro {
 
     PENDIENTE, //factura emitida, aún no cobrada

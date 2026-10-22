@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /**
- * Implements {@link EditarClienteUseCase}. A missing client and one owned by another user are
- * both reported as {@link ClienteInvalidoException} (400) — unlike the read side, editing has
- * no natural "empty" return, so this is the simplest reuse of an existing mapped exception.
+ * Implementa {@link EditarClienteUseCase}. Un cliente inexistente y uno de otro usuario se
+ * reportan igual con {@link ClienteInvalidoException} (400): al editar no hay un retorno "vacío" natural,
+ * así que se reutiliza una excepción ya mapeada.
  */
 @Service
 public class EditarClienteService implements EditarClienteUseCase {
@@ -33,7 +33,7 @@ public class EditarClienteService implements EditarClienteUseCase {
 
         Cliente cliente = clienteOpt.get();
 
-        // Access control: don't reveal that a cliente exists if it belongs to someone else
+        // Control de acceso: no revelar que el cliente existe si es de otro usuario
         if (!cliente.getUsuarioId().equals(comando.usuarioId())) {
             throw new ClienteInvalidoException("El cliente no existe");
         }

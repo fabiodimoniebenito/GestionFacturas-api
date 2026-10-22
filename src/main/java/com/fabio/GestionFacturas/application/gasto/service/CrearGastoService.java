@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implements the {@link CrearGastoUseCase} inbound port. Called by {@code GastoController};
- * talks only to {@link GastoRepositoryPort} (outbound port), never to the JPA adapter directly —
- * that indirection is what lets the persistence technology change without touching this class.
+ * Implementa {@link CrearGastoUseCase}. Lo invoca {@code GastoController} y habla solo con
+ * {@link GastoRepositoryPort}, nunca con el adapter JPA: así se puede cambiar la persistencia sin tocar esta clase.
  */
 @Service
 public class CrearGastoService implements CrearGastoUseCase {
@@ -19,7 +18,7 @@ public class CrearGastoService implements CrearGastoUseCase {
     private final GastoRepositoryPort gastoRepositoryPort;
     private final ClienteRepositoryPort clienteRepositoryPort;
 
-    // Constructor injection only (project convention) — no @Autowired fields, easier to unit test with mocks.
+    // Solo inyección por constructor (convención del proyecto): sin @Autowired en campos, más fácil de testear con mocks
     public CrearGastoService(GastoRepositoryPort gastoRepositoryPort, ClienteRepositoryPort clienteRepositoryPort) {
         this.gastoRepositoryPort = gastoRepositoryPort;
         this.clienteRepositoryPort = clienteRepositoryPort;
@@ -56,5 +55,24 @@ public class CrearGastoService implements CrearGastoUseCase {
                 comando.fechaEmision(), baseImponible, iva, total);
 
         return gastoRepositoryPort.guardar(gasto);
+    }
+
+    // Mismo mensaje para no encontrado / de otro usuario / inactivo, para que no se distingan desde fuera
+    // (igual que DesactivarClienteService y RegistrarCobroService).
+    private void validarCliente(Long clienteId, Long usuarioId) {
+        Optional<Cliente> clienteOpt = clienteRepositoryPort.buscarPorId(clienteId);
+        if (clienteOpt.isEmpty()) {
+            throw new ClienteNoEncontradoException("Cliente no encontrado");
+        }
+
+        Cliente cliente = clienteOpt.get();
+
+        if (!cliente.getUsuarioId().equals(usuarioId)) {
+            throw new ClienteNoEncontradoException("Cliente no encontrado");
+        }
+
+        if (!cliente.isActivo()) {
+            throw new ClienteNoEncontradoException("Cliente no encontrado");
+        }
     }
 }

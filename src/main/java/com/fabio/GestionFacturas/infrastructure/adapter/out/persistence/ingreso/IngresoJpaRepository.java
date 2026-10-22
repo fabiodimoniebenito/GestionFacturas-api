@@ -6,16 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-/** Spring Data repository — CRUD comes from {@code JpaRepository}; only used by {@code IngresoPersistenceAdapter}. */
+/** Repositorio Spring Data; el CRUD viene de {@code JpaRepository}. Solo lo usa {@code IngresoPersistenceAdapter}. */
 public interface IngresoJpaRepository extends JpaRepository<IngresoJpaEntity, Long> {
 
-    // Spring Data derives the query from the method name — no SQL/JPQL written here
+    // Spring Data deriva la consulta del nombre del método: no hay SQL/JPQL escrito aquí
     List<IngresoJpaEntity> findByUsuarioId(Long usuarioId);
 
-    // Between is inclusive on both ends: fechaEmision in [desde, hasta]
+    // Between es inclusivo en ambos extremos: fechaEmision en [desde, hasta]
     List<IngresoJpaEntity> findByUsuarioIdAndFechaEmisionBetween(Long usuarioId, LocalDate desde, LocalDate hasta);
 
-    // Oldest first: the longest-outstanding invoices lead the list
+    // Del más antiguo al más reciente: las facturas que llevan más tiempo sin cobrar van primero
     List<IngresoJpaEntity> findByUsuarioIdAndEstadoCobroOrderByFechaEmisionAsc(Long usuarioId, EstadoCobro estadoCobro);
 
 }

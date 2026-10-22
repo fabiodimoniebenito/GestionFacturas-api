@@ -1,11 +1,11 @@
 package com.fabio.GestionFacturas.domain.dashboard;
 
 /**
- * Profitability of one client in a period: the same figures as {@link ResumenPeriodo}, restricted to
- * the ingresos and gastos linked to that client.
+ * Rentabilidad de un cliente en un periodo: las mismas cifras que {@link ResumenPeriodo},
+ * limitadas a los ingresos y gastos vinculados a ese cliente.
  *
- * @param clienteId the client, or {@code null} for the "sin cliente" entry (gastos without a client)
- * @param resumen   the client's figures; never null
+ * @param clienteId el cliente, o {@code null} para la entrada "sin cliente" (gastos sin cliente)
+ * @param resumen   las cifras del cliente; nunca null
  */
 public record RentabilidadCliente(Long clienteId, ResumenPeriodo resumen) {
 

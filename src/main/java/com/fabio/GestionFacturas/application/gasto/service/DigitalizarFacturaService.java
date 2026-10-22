@@ -12,17 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implements the {@link DigitalizarFacturaUseCase} inbound port and orchestrates the full
- * invoice-digitization workflow by composing three outbound ports plus one domain service,
- * each independently swappable behind its interface:
+ * Implementa {@link DigitalizarFacturaUseCase} y orquesta la digitalización de una factura
+ * combinando tres puertos de salida y un servicio de dominio, cada uno intercambiable:
  * <pre>
- *   controller -> this service -> FileStoragePort   (save the raw file;    prod: LocalStorageAdapter)
- *                               -> OcrPort           (image -> plain text; prod: TesseractOcrAdapter, dev/tests: MockOcrAdapter)
- *                               -> FacturaTextParser (text -> fields;      pure domain logic, no adapter)
- *                               -> GastoRepositoryPort (persist the draft; prod: GastoPersistenceAdapter)
+ *   controller -> este service -> FileStoragePort     (guarda el archivo;  prod: LocalStorageAdapter)
+ *                              -> OcrPort             (imagen -> texto;    prod: TesseractOcrAdapter, dev/tests: MockOcrAdapter)
+ *                              -> FacturaTextParser   (texto -> campos;    lógica de dominio pura)
+ *                              -> GastoRepositoryPort (guarda el borrador; prod: GastoPersistenceAdapter)
  * </pre>
- * OCR only turns pixels into text; it never parses fields, which is why extraction is a
- * separate domain step and not part of OcrPort itself.
+ * El OCR solo convierte píxeles en texto y nunca extrae campos; por eso la extracción
+ * es un paso de dominio aparte y no forma parte de OcrPort.
  */
 @Service
 public class DigitalizarFacturaService implements DigitalizarFacturaUseCase {
@@ -45,13 +44,13 @@ public class DigitalizarFacturaService implements DigitalizarFacturaUseCase {
     @Override
     @Transactional
     public Gasto digitalizar(ComandoDigitalizarFactura comando) {
-        // Step 1: persist the uploaded file, get back a storage reference (not the bytes) to keep on the Gasto
+        // Paso 1: guardar el archivo subido; en el Gasto se conserva la referencia, no los bytes
         String referencia = fileStoragePort.guardar(comando.contenido(), comando.nombreOriginal(), comando.contentType());
 
-        // Step 2: OCR adapter converts the image to plain text (which adapter runs depends on the active Spring profile)
+        // Paso 2: el adapter OCR convierte la imagen en texto (cuál se usa depende del perfil de Spring activo)
         String textoOcr = ocrPort.extraerTexto(comando.contenido());
 
-        // Step 3: framework-free domain parsing turns that text into candidate fields
+        // Paso 3: el parser de dominio (sin framework) extrae los campos candidatos del texto
         DatosFacturaExtraidos datos = facturaTextParser.parsear(textoOcr);
 
         Dinero baseImponible = null;
@@ -69,7 +68,7 @@ public class DigitalizarFacturaService implements DigitalizarFacturaUseCase {
             total = Dinero.deEuros(datos.total());
         }
 
-        // Step 4: build the domain object in BORRADOR — the user reviews/corrects fields afterwards via revisar()
+        // Paso 4: crear el Gasto en BORRADOR; el usuario corrige los campos después con revisar()
         Gasto gasto = Gasto.crearBorradorDesdeArchivo(comando.usuarioId(), datos.emisor(), datos.fechaEmision(),
                 baseImponible, iva, total, referencia);
 

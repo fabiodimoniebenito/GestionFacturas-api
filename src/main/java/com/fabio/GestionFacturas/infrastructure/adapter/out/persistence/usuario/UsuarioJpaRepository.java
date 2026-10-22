@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-/** Spring Data repository; only used by {@code UsuarioPersistenceAdapter}. */
+/** Repositorio Spring Data; solo lo usa {@code UsuarioPersistenceAdapter}. */
 public interface UsuarioJpaRepository extends JpaRepository<UsuarioJpaEntity, Long> {
 
     Optional<UsuarioJpaEntity> findByEmail(String email);

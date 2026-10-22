@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Registers plain domain classes as Spring beans so they can be constructor-injected
- * (e.g. into {@code DigitalizarFacturaService}) without the domain itself depending on Spring —
- * {@link FacturaTextParser} has no {@code @Component}, staying a framework-free POJO.
+ * Registra clases de dominio puro como beans de Spring para poder inyectarlas por constructor
+ * (p. ej. en {@code DigitalizarFacturaService}) sin que el dominio dependa de Spring:
+ * {@link FacturaTextParser} no lleva {@code @Component} y sigue siendo un POJO sin framework.
  */
 @Configuration
 public class DomainBeansConfig {

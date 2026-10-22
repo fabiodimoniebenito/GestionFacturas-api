@@ -22,9 +22,9 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for DigitalizarFacturaService with all four collaborators mocked
- * (FileStoragePort, OcrPort, FacturaTextParser, GastoRepositoryPort) — verifies the service
- * wires the OCR pipeline steps together correctly without touching real storage/OCR/DB.
+ * Tests unitarios de DigitalizarFacturaService con sus cuatro colaboradores mockeados
+ * (FileStoragePort, OcrPort, FacturaTextParser, GastoRepositoryPort). Verifican que el service
+ * encadena bien los pasos del pipeline OCR sin tocar almacenamiento, OCR ni BD reales.
  */
 @ExtendWith(MockitoExtension.class)
 class DigitalizarFacturaServiceTest {

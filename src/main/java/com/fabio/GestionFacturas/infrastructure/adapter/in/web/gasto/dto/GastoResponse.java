@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/** Response DTO built by {@code GastoWebMapper} from a domain Gasto — the outbound half of the web contract. */
+/** DTO de respuesta que {@code GastoWebMapper} construye desde un Gasto de dominio (la parte de salida del contrato web). */
 public record GastoResponse(
         Long id,
         Long usuarioId,

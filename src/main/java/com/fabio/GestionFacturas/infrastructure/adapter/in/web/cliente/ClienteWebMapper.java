@@ -8,8 +8,8 @@ import com.fabio.GestionFacturas.infrastructure.adapter.in.web.cliente.dto.Crear
 import com.fabio.GestionFacturas.infrastructure.adapter.in.web.cliente.dto.EditarClienteRequest;
 
 /**
- * Converts between web DTOs and the domain {@link Cliente} — the boundary that keeps the
- * three models (DTO / domain / JPA entity) separate. Static/stateless: no port dependency, pure mapping.
+ * Convierte entre los DTOs web y el {@link Cliente} de dominio; es la frontera que mantiene separados
+ * los tres modelos (DTO / dominio / entidad JPA). Sin estado ni dependencias: solo mapeo.
  */
 public class ClienteWebMapper {
 

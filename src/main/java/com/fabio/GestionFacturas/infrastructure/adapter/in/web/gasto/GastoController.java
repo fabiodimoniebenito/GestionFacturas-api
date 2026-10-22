@@ -31,11 +31,11 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Web adapter (inbound) for expenses. Depends only on the three inbound use-case ports below —
- * never on the services or repositories behind them. {@code GastoWebMapper} converts between
- * request/response DTOs and domain objects, so a {@link Gasto} never crosses the HTTP boundary directly.
- * {@code usuarioId} always comes from {@code @AuthenticationPrincipal}, set by {@code JwtAuthenticationFilter}
- * from the validated JWT — it's never trusted from the request body/params.
+ * Adapter web (entrada) de gastos. Depende solo de los tres puertos de entrada inferiores,
+ * nunca de los services ni repositorios que hay detrás. {@code GastoWebMapper} convierte entre
+ * DTOs y objetos de dominio, así un {@link Gasto} nunca cruza directamente la frontera HTTP.
+ * {@code usuarioId} siempre viene de {@code @AuthenticationPrincipal}, que rellena {@code JwtAuthenticationFilter}
+ * a partir del JWT validado; nunca se confía en el cuerpo ni en los parámetros de la petición.
  */
 @RestController
 @RequestMapping("/api/gastos")
@@ -60,7 +60,7 @@ public class GastoController {
         this.revisarGastoUseCase = revisarGastoUseCase;
     }
 
-    // request DTO -> command -> CrearGastoUseCase (port) -> CrearGastoService -> domain Gasto -> response DTO
+    // DTO de petición -> comando -> CrearGastoUseCase (puerto) -> CrearGastoService -> Gasto de dominio -> DTO de respuesta
     @PostMapping
     public ResponseEntity<GastoResponse> crear(@Valid @RequestBody CrearGastoRequest request,
                                                @AuthenticationPrincipal Long usuarioId) {
@@ -112,8 +112,8 @@ public class GastoController {
             throw new IllegalArgumentException("Tipo de archivo no soportado: " + contentType);
         }
 
-        // MultipartFile is a framework type — converted to byte[] right here, since application
-        // ports must never depend on Spring MVC types (see ComandoDigitalizarFactura's Javadoc).
+        // MultipartFile es un tipo del framework: se convierte a byte[] aquí mismo, porque los puertos
+        // de aplicación no pueden depender de tipos de Spring MVC (ver el Javadoc de ComandoDigitalizarFactura).
         byte[] contenido;
         try {
             contenido = archivo.getBytes();
@@ -124,7 +124,7 @@ public class GastoController {
         ComandoDigitalizarFactura comando = new ComandoDigitalizarFactura(
                 usuarioId, contenido, archivo.getOriginalFilename(), contentType);
 
-        // Kicks off the full OCR pipeline in DigitalizarFacturaService (storage -> OCR -> parse -> save)
+        // Lanza el pipeline OCR completo en DigitalizarFacturaService (almacenar -> OCR -> parsear -> guardar)
         Gasto gasto = digitalizarFacturaUseCase.digitalizar(comando);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(GastoWebMapper.aRespuesta(gasto));

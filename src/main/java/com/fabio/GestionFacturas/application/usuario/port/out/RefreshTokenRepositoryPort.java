@@ -4,12 +4,12 @@ import com.fabio.GestionFacturas.domain.usuario.RefreshToken;
 
 import java.util.Optional;
 
-/** Outbound port implemented by {@code RefreshTokenPersistenceAdapter} (JPA) in infrastructure. */
+/** Puerto de salida implementado en infraestructura por {@code RefreshTokenPersistenceAdapter} (JPA). */
 public interface RefreshTokenRepositoryPort {
 
     RefreshToken guardar(RefreshToken refreshToken);
 
-    /** Lookup is by hash — the raw token from the client is hashed first, never compared/stored in the clear. */
+    /** La búsqueda es por hash: el token en claro del cliente se hashea antes, nunca se compara ni se guarda tal cual. */
     Optional<RefreshToken> buscarPorTokenHash(String tokenHash);
 
 }

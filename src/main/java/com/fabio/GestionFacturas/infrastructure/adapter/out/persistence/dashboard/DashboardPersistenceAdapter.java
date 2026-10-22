@@ -14,8 +14,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Implements {@link DashboardConsultaPort} by reusing the gasto/ingreso Spring Data repositories
- * and their mappers. Results are mapped to domain before returning, so JPA entities never escape.
+ * Implementa {@link DashboardConsultaPort} reutilizando los repositorios Spring Data de gasto/ingreso
+ * y sus mappers. Los resultados se mapean a dominio antes de devolverse, así las entidades JPA no escapan.
  */
 @Component
 public class DashboardPersistenceAdapter implements DashboardConsultaPort {

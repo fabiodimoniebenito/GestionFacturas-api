@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 
-/** Unit tests for Dinero's invariants (see {@link Dinero}'s compact constructor). @DisplayName covers each case; no mocks needed since it's a pure domain value object. */
+/** Tests unitarios de las invariantes de Dinero (ver el constructor compacto de {@link Dinero}). @DisplayName describe cada caso; no hacen falta mocks porque es un objeto de valor de dominio puro. */
 class DineroTest {
 
 

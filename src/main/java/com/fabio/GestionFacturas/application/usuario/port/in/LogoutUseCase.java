@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.application.usuario.port.in;
 
-/** Inbound port for logout. Implemented by {@code LogoutService}, which revokes (not deletes) the refresh token. */
+/** Puerto de entrada para el logout. Lo implementa {@code LogoutService}, que revoca (no borra) el refresh token. */
 public interface LogoutUseCase {
 
     void logout(ComandoLogout comandoLogout);

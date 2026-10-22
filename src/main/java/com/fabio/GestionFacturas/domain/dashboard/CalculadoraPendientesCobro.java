@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Pure-domain calculator: builds PendientesCobro from ingresos that the caller has already
- * filtered to PENDIENTE. No Spring/JPA on purpose (hexagonal architecture).
+ * Calculadora de dominio puro: construye PendientesCobro a partir de ingresos que quien llama
+ * ya ha filtrado a PENDIENTE. Sin Spring/JPA a propósito (arquitectura hexagonal).
  */
 public class CalculadoraPendientesCobro {
 
@@ -21,7 +21,7 @@ public class CalculadoraPendientesCobro {
         return new PendientesCobro(List.copyOf(pendientes), Dinero.deEuros(total));
     }
 
-    /** Amounts can be null in the domain; they count as zero in the sum. */
+    /** Los importes pueden ser null en el dominio; cuentan como cero en la suma. */
     private BigDecimal cantidadOCero(Dinero dinero) {
         if (dinero == null) {
             return BigDecimal.ZERO;

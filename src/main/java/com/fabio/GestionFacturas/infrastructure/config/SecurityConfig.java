@@ -17,10 +17,10 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 
 
 /**
- * Wires up stateless JWT security: no sessions, no CSRF (irrelevant without cookies/sessions),
- * every request runs through {@link JwtAuthenticationFilter} before Spring Security's normal
- * username/password filter, and only auth/health/docs routes are public. Also exposes the
- * {@link PasswordEncoder} bean used to hash/verify passwords elsewhere in the app.
+ * Configura la seguridad JWT sin estado: sin sesiones y sin CSRF (irrelevante sin cookies ni sesiones).
+ * Cada petición pasa por {@link JwtAuthenticationFilter} antes del filtro de usuario/contraseña de Spring Security,
+ * y solo son públicas las rutas de auth, health y documentación. También expone el bean
+ * {@link PasswordEncoder} que se usa para hashear y verificar contraseñas en el resto de la app.
  */
 @Configuration
 public class SecurityConfig {
@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public routes: sign-up/login/refresh/logout, the health check, and API docs
+                        // Rutas públicas: registro, login, refresh, logout, health check y documentación de la API
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/health",
@@ -62,13 +62,12 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                // No/invalid token -> 401 with a JSON error body and WWW-Authenticate: Bearer (Spring's
-                // default here would be 403). An authenticated user denied access still gets 403 from the
-                // default access-denied handler.
+                // Sin token o con token inválido -> 401 (por defecto Spring respondería 403). Un usuario autenticado
+                // sin permisos sigue recibiendo 403 del access-denied handler por defecto.
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(restAuthenticationEntryPoint)
                 )
-                // Runs our JWT check before Spring's own form-login filter, since there's no login form here
+                // Ejecuta nuestra validación JWT antes del filtro de form-login de Spring, ya que aquí no hay formulario de login
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(rateLimitFilter, JwtAuthenticationFilter.class);
 

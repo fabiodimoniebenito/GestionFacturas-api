@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-/** Per-client grouping rules; the figures themselves reuse CalculadoraResumenPeriodo (real instance, not mocked). */
+/** Reglas de agrupación por cliente; las cifras reutilizan CalculadoraResumenPeriodo (instancia real, sin mock). */
 class CalculadoraRentabilidadClientesTest {
 
     private static final LocalDate FECHA = LocalDate.of(2026, 1, 15);

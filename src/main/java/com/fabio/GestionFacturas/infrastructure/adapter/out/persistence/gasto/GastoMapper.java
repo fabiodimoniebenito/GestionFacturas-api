@@ -6,8 +6,8 @@ import com.fabio.GestionFacturas.domain.shared.Dinero;
 import java.math.BigDecimal;
 
 /**
- * Converts between the domain {@link Gasto} and {@link GastoJpaEntity} — the third of the three
- * models (DTO / domain / JPA entity), used only by {@code GastoPersistenceAdapter}.
+ * Convierte entre el {@link Gasto} de dominio y {@link GastoJpaEntity}: el tercero de los tres
+ * modelos (DTO / dominio / entidad JPA). Solo lo usa {@code GastoPersistenceAdapter}.
  */
 public class GastoMapper {
 
@@ -69,7 +69,7 @@ public class GastoMapper {
 
 
 
-    // Same fallback the web mapper uses: domain has one Dinero per amount, entity has a single moneda column
+    // Mismo fallback que el mapper web: el dominio tiene un Dinero por importe y la entidad una sola columna moneda
     private static String extraerMoneda(Gasto gasto){
         Dinero total = gasto.getTotal();
 

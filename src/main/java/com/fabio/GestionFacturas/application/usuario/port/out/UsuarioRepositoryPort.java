@@ -4,7 +4,7 @@ import com.fabio.GestionFacturas.domain.usuario.Usuario;
 
 import java.util.Optional;
 
-/** Outbound port implemented by {@code UsuarioPersistenceAdapter} (JPA) in infrastructure. */
+/** Puerto de salida implementado en infraestructura por {@code UsuarioPersistenceAdapter} (JPA). */
 public interface UsuarioRepositoryPort {
 
     Usuario guardar(Usuario usuario);
