@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for ConsultarGastosService, notably the access-control rule (empty for someone else's gasto). */
+/** Tests unitarios de ConsultarGastosService, sobre todo la regla de control de acceso (vacío si el gasto es de otro usuario). */
 @ExtendWith(MockitoExtension.class)
 class ConsultarGastosServiceTest {
 

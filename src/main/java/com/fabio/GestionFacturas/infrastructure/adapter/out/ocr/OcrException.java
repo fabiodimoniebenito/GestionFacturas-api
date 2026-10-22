@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.infrastructure.adapter.out.ocr;
 
-/** Thrown by {@link TesseractOcrAdapter} on unreadable/unsupported input or engine failure. Not mapped by GlobalExceptionHandler — falls through to a default 500. */
+/** Se lanza desde {@link TesseractOcrAdapter} ante una entrada ilegible o no soportada, o un fallo del motor. GlobalExceptionHandler no la mapea: acaba en un 500 por defecto. */
 public class OcrException extends RuntimeException {
 
     public OcrException(String message) {

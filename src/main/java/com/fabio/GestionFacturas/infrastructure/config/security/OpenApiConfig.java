@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
         scheme = "bearer",
         bearerFormat = "JWT"
 )
-/** Registers the "bearerAuth" scheme so springdoc's Swagger UI shows an Authorize button for the JWT. */
+/** Registra el esquema "bearerAuth" para que Swagger UI de springdoc muestre el botón Authorize del JWT. */
 public class OpenApiConfig {
 
     @Bean

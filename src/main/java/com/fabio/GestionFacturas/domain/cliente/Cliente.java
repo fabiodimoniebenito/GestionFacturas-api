@@ -1,9 +1,9 @@
 package com.fabio.GestionFacturas.domain.cliente;
 
 /**
- * Core domain entity: a client belonging to a user, kept for organization (never billed
- * directly by this app). Plain POJO on purpose (hexagonal architecture) — no JPA/Spring
- * annotations here; persistence mapping lives in the infrastructure layer's JpaEntity + Mapper.
+ * Entidad de dominio: un cliente de un usuario, guardado solo para organización (esta app no le factura
+ * directamente). POJO puro a propósito (arquitectura hexagonal): sin anotaciones de JPA/Spring;
+ * el mapeo a persistencia vive en infraestructura (JpaEntity + Mapper).
  */
 public class Cliente {
 
@@ -16,8 +16,8 @@ public class Cliente {
     private boolean activo;
 
     /**
-     * Full constructor used by mappers to rebuild a Cliente from persistence.
-     * Enforces the domain's own invariants (self-validation), independent of any framework.
+     * Constructor completo, usado por los mappers para reconstruir un Cliente desde persistencia.
+     * Valida las invariantes del dominio por sí mismo, sin depender de ningún framework.
      */
     public Cliente(Long id, Long usuarioId, String nombre, String nif, String email,
                     String telefono, boolean activo) {
@@ -40,17 +40,17 @@ public class Cliente {
         this.activo = activo;
     }
 
-    /** Factory for a newly registered client: starts life active. */
+    /** Fábrica para un cliente recién registrado: nace activo. */
     public static Cliente crearActivo(Long usuarioId, String nombre, String nif, String email, String telefono) {
         return new Cliente(null, usuarioId, nombre, nif, email, telefono, true);
     }
 
-    /** Soft delete: flips the client to inactive without removing the row (keeps history for past gastos). */
+    /** Borrado lógico: pasa el cliente a inactivo sin borrar la fila (se conserva el historial de sus gastos). */
     public void desactivar() {
         this.activo = false;
     }
 
-    /** Updates the mutable fields (nombre, email, telefono). nif and usuarioId never change after creation. */
+    /** Actualiza los campos modificables (nombre, email, telefono). nif y usuarioId no cambian tras la creación. */
     public void actualizarDatos(String nombre, String email, String telefono) {
         if (nombre == null || nombre.isBlank()) {
             throw new ClienteInvalidoException("El cliente debe tener un nombre");

@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Output of {@link FacturaTextParser}: fields extracted from raw OCR text.
- * Any field can be null when the parser couldn't find it — the user fills gaps in on review.
+ * Resultado de {@link FacturaTextParser}: campos extraídos del texto bruto del OCR.
+ * Cualquier campo puede ser null si el parser no lo encontró; el usuario lo completa al revisar.
  */
 public record DatosFacturaExtraidos(
         String emisor,

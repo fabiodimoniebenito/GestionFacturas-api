@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implements {@link RegistrarUsuarioUseCase} (sign-up), called from {@code AuthController}.
- * Hashes the password with {@code PasswordEncoder} (BCrypt, a Spring Security bean) before
- * the domain {@link Usuario} is ever constructed — the raw password never gets past this service.
+ * Implementa {@link RegistrarUsuarioUseCase} (registro), invocado desde {@code AuthController}.
+ * Hashea la contraseña con {@code PasswordEncoder} (BCrypt) antes de construir el {@link Usuario} de dominio:
+ * la contraseña en claro no sale de este service.
  */
 @Service
 public class RegistrarUsuarioService implements RegistrarUsuarioUseCase {
@@ -28,7 +28,7 @@ public class RegistrarUsuarioService implements RegistrarUsuarioUseCase {
     @Override
     @Transactional
     public Usuario registrar(ComandoRegistrar comando) {
-        // Uniqueness check happens here (not via a DB constraint) so we can throw a clear domain exception -> HTTP 409
+        // La unicidad se comprueba aquí (no solo con la restricción de BD) para lanzar una excepción de dominio clara -> HTTP 409
         usuarioRepository.buscarPorEmail(comando.email()).ifPresent(u -> {
             throw new EmailYaRegistradoException("Ya existe un usuario con ese email");
         });

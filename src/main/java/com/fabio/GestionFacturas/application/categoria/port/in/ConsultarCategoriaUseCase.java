@@ -4,7 +4,7 @@ import com.fabio.GestionFacturas.domain.categoria.Categoria;
 
 import java.util.List;
 
-/** Inbound port consumed by {@code CategoriaController}; implemented by {@code ConsultarCategoriaService}. */
+/** Puerto de entrada usado por {@code CategoriaController}; lo implementa {@code ConsultarCategoriaService}. */
 public interface ConsultarCategoriaUseCase {
 
     List<Categoria> listarTodas();

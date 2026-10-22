@@ -3,9 +3,9 @@ package com.fabio.GestionFacturas.domain.usuario;
 import java.time.LocalDateTime;
 
 /**
- * Domain record of a refresh token. Only the hash is stored here (and in persistence) —
- * the raw token is never kept, so a DB leak alone can't be used to forge sessions.
- * Revocation is a flag (not a delete) so logout history/audit is preserved.
+ * Registro de dominio de un refresh token. Solo se guarda el hash (aquí y en persistencia):
+ * el token en claro no se conserva, así una filtración de la BD no sirve para falsificar sesiones.
+ * La revocación es una marca (no un borrado) para conservar el historial de logout.
  */
 public class RefreshToken {
 
@@ -37,7 +37,7 @@ public class RefreshToken {
         this.creadoEn = fechaCreacion;
     }
 
-    /** Valid only if neither revoked nor expired — checked on every refresh/logout attempt. */
+    /** Es válido solo si no está revocado ni caducado; se comprueba en cada refresh/logout. */
     public boolean esValido() {
         if (revocado) {
             return false;
@@ -48,7 +48,7 @@ public class RefreshToken {
         return true;
     }
 
-    /** Marks the token unusable without deleting the row (see class note). */
+    /** Deja el token inutilizable sin borrar la fila (ver nota de la clase). */
     public void revocar() {
         this.revocado = true;
     }

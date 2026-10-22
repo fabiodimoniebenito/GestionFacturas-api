@@ -26,15 +26,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Web adapter (inbound) for clients. Depends only on the four inbound use-case ports below —
- * never on the services or repositories behind them. {@code ClienteWebMapper} converts between
- * request/response DTOs and domain objects, so a {@link Cliente} never crosses the HTTP boundary
- * directly. {@code usuarioId} always comes from {@code @AuthenticationPrincipal}, set by
- * {@code JwtAuthenticationFilter} from the validated JWT — it's never trusted from the request.
- * <p>
- * POST and DELETE currently call TDD-stub services ({@code CrearClienteService},
- * {@code DesactivarClienteService}) and will throw {@code UnsupportedOperationException} until
- * those are implemented — that's expected at this stage.
+ * Adapter web (entrada) de clientes. Depende solo de los cuatro puertos de entrada inferiores,
+ * nunca de los services ni repositorios que hay detrás. {@code ClienteWebMapper} convierte entre
+ * DTOs y objetos de dominio, así un {@link Cliente} nunca cruza directamente la frontera HTTP.
+ * {@code usuarioId} siempre viene de {@code @AuthenticationPrincipal}, que rellena
+ * {@code JwtAuthenticationFilter} a partir del JWT validado; nunca se confía en la petición.
  */
 @RestController
 @RequestMapping("/api/clientes")
@@ -55,7 +51,7 @@ public class ClienteController {
         this.desactivarClienteUseCase = desactivarClienteUseCase;
     }
 
-    // request DTO -> command -> CrearClienteUseCase (port) -> CrearClienteService -> domain Cliente -> response DTO
+    // DTO de petición -> comando -> CrearClienteUseCase (puerto) -> CrearClienteService -> Cliente de dominio -> DTO de respuesta
     @PostMapping
     public ResponseEntity<ClienteResponse> crear(@Valid @RequestBody CrearClienteRequest request,
                                                   @AuthenticationPrincipal Long usuarioId) {
@@ -89,7 +85,7 @@ public class ClienteController {
         return ResponseEntity.ok(ClienteWebMapper.aRespuesta(cliente));
     }
 
-    // Soft delete: DesactivarClienteUseCase flips activo=false, the row is kept
+    // Borrado lógico: DesactivarClienteUseCase pone activo=false y conserva la fila
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> desactivar(@PathVariable Long id, @AuthenticationPrincipal Long usuarioId) {
         desactivarClienteUseCase.desactivar(new ComandoDesactivarCliente(id, usuarioId));

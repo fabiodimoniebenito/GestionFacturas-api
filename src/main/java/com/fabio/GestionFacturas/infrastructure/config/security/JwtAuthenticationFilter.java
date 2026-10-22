@@ -16,11 +16,11 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Runs once per request (before it reaches any controller), reading the Bearer token and,
- * if valid, populating the {@code SecurityContext} so {@code @AuthenticationPrincipal Long usuarioId}
- * works in controllers. Registered in {@link com.fabio.GestionFacturas.infrastructure.config.SecurityConfig}
- * ahead of Spring's default filter. No token, or an invalid one, just falls through unauthenticated —
- * it's {@code anyRequest().authenticated()} in SecurityConfig that then rejects the request.
+ * Se ejecuta una vez por petición (antes de llegar a cualquier controller): lee el token Bearer y, si es válido,
+ * rellena el {@code SecurityContext} para que {@code @AuthenticationPrincipal Long usuarioId} funcione en los
+ * controllers. Se registra en {@link com.fabio.GestionFacturas.infrastructure.config.SecurityConfig} antes del
+ * filtro por defecto de Spring. Sin token, o con uno inválido, la petición sigue sin autenticar;
+ * después {@code anyRequest().authenticated()} de SecurityConfig la rechaza.
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         Long usuarioId = jwtTokenProvider.extraerUsuarioId(token);
 
-        // The principal is just the user id (Long) — no roles/authorities used in this app, hence List.of()
+        // El principal es solo el id del usuario (Long); la app no usa roles ni authorities, de ahí List.of()
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 usuarioId, null, List.of());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

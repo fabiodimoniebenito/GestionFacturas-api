@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Core domain entity: an invoice issued to a client, tracked until it is collected.
- * Plain POJO on purpose (hexagonal architecture) — no JPA/Spring annotations here;
- * persistence mapping lives in the infrastructure layer's JpaEntity + Mapper.
+ * Entidad de dominio: una factura emitida a un cliente, con seguimiento hasta que se cobra.
+ * POJO puro a propósito (arquitectura hexagonal): sin anotaciones de JPA/Spring;
+ * el mapeo a persistencia vive en infraestructura (JpaEntity + Mapper).
  */
 public class Ingreso {
 
@@ -24,8 +24,8 @@ public class Ingreso {
     private final LocalDateTime creadoEn;
 
     /**
-     * Full constructor used by mappers to rebuild an Ingreso from persistence.
-     * Enforces the domain's own invariants (self-validation), independent of any framework.
+     * Constructor completo, usado por los mappers para reconstruir un Ingreso desde persistencia.
+     * Valida las invariantes del dominio por sí mismo, sin depender de ningún framework.
      */
     public Ingreso(Long id, Long usuarioId, Long clienteId, String concepto, LocalDate fechaEmision,
                     Dinero baseImponible, Dinero iva, Dinero total, EstadoCobro estadoCobro,
@@ -57,7 +57,7 @@ public class Ingreso {
         this.creadoEn = fechaCreacion;
     }
 
-    /** Factory for a newly issued invoice: starts life as PENDIENTE, uncollected. */
+    /** Fábrica para una factura recién emitida: nace PENDIENTE, sin cobrar. */
     public static Ingreso crear(Long usuarioId, Long clienteId, String concepto, LocalDate fechaEmision,
                                  Dinero baseImponible, Dinero iva, Dinero total) {
         return new Ingreso(null, usuarioId, clienteId, concepto, fechaEmision,

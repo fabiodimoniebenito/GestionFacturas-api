@@ -21,7 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for ResumenPeriodoService: orchestration only — the calculation rules live in CalculadoraResumenPeriodoTest. */
+/** Tests unitarios de ResumenPeriodoService: solo la orquestación; las reglas de cálculo están en CalculadoraResumenPeriodoTest. */
 @ExtendWith(MockitoExtension.class)
 class ResumenPeriodoServiceTest {
 

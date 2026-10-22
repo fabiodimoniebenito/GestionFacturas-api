@@ -10,8 +10,8 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * Persistence model for RefreshToken. {@code tokenHash} is unique so a lookup by hash
- * (see {@code RefreshTokenJpaRepository}) is a direct indexed match, not a scan.
+ * Modelo de persistencia de RefreshToken. {@code tokenHash} es único, así la búsqueda por hash
+ * (ver {@code RefreshTokenJpaRepository}) es una coincidencia directa por índice y no un recorrido completo.
  */
 @Entity
 @Table(name = "refresh_token")
@@ -36,7 +36,7 @@ public class RefreshTokenJpaEntity {
     @Column(name = "creado_en", insertable = false, updatable = false)
     private LocalDateTime creadoEn;
 
-    /** No-args constructor required by JPA/Hibernate. */
+    /** Constructor sin argumentos exigido por JPA/Hibernate. */
     protected RefreshTokenJpaEntity() {
     }
 

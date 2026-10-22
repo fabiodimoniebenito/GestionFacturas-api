@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for EditarClienteService: happy path plus the not-found / not-owned rejections. */
+/** Tests unitarios de EditarClienteService: caso feliz y rechazo por cliente inexistente o de otro usuario. */
 @ExtendWith(MockitoExtension.class)
 class EditarClienteServiceTest {
 

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implements the {@link CrearIngresoUseCase} inbound port. Called by {@code IngresoController};
- * talks only to {@link IngresoRepositoryPort} (outbound port), never to the JPA adapter directly.
+ * Implementa {@link CrearIngresoUseCase}. Lo invoca {@code IngresoController} y habla solo con
+ * {@link IngresoRepositoryPort}, nunca con el adapter JPA.
  */
 @Service
 public class CrearIngresoService implements CrearIngresoUseCase {

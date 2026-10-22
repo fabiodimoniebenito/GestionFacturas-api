@@ -3,15 +3,15 @@ package com.fabio.GestionFacturas.domain.dashboard;
 import com.fabio.GestionFacturas.domain.shared.Dinero;
 
 /**
- * Period summary for the dashboard. Every figure comes as total (with IVA) and base (without IVA).
- * Never null: an absent amount is zero.
+ * Resumen de periodo para el dashboard. Cada cifra se da en total (con IVA) y en base (sin IVA).
+ * Nunca es null: un importe ausente es cero.
  *
- * @param facturadoTotal          sum of total of ALL ingresos (regardless of estadoCobro)
- * @param facturadoBase           sum of baseImponible of ALL ingresos
- * @param cobradoTotal            sum of total of COBRADA ingresos only
- * @param cobradoBase             sum of baseImponible of COBRADA ingresos only
- * @param gastosTotal             sum of total of all gastos
- * @param gastosBase              sum of baseImponible of all gastos
+ * @param facturadoTotal          suma del total de TODOS los ingresos (sea cual sea su estadoCobro)
+ * @param facturadoBase           suma de la baseImponible de TODOS los ingresos
+ * @param cobradoTotal            suma del total de los ingresos COBRADA únicamente
+ * @param cobradoBase             suma de la baseImponible de los ingresos COBRADA únicamente
+ * @param gastosTotal             suma del total de todos los gastos
+ * @param gastosBase              suma de la baseImponible de todos los gastos
  * @param beneficioCajaTotal      cobradoTotal - gastosTotal
  * @param beneficioCajaBase       cobradoBase - gastosBase
  * @param beneficioFacturadoTotal facturadoTotal - gastosTotal

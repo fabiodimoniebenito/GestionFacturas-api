@@ -13,11 +13,10 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 /**
- * Implements {@link TokenGeneradorPort}: issues and validates the JWT access token. The user
- * id is the JWT subject (not a claim) so {@link #extraerUsuarioId} is a direct read; email is
- * carried only as an extra claim for convenience. Also used directly (not through the port) by
- * {@link JwtAuthenticationFilter} for {@link #esValido} and {@link #extraerUsuarioId}, since
- * those two aren't part of the application-facing port contract.
+ * Implementa {@link TokenGeneradorPort}: emite y valida el JWT de acceso. El id del usuario es el
+ * subject del JWT (no un claim), así {@link #extraerUsuarioId} es una lectura directa; el email va
+ * solo como claim adicional. {@link JwtAuthenticationFilter} también lo usa directamente (sin pasar por
+ * el puerto) para {@link #esValido} y {@link #extraerUsuarioId}, que no forman parte del contrato del puerto.
  */
 @Component
 public class JwtTokenProvider implements TokenGeneradorPort{
@@ -63,7 +62,7 @@ public class JwtTokenProvider implements TokenGeneradorPort{
     }
 
 
-    // Parsing throws if the signature, format, or expiration is wrong — any exception means "not valid"
+    // El parseo lanza excepción si la firma, el formato o la caducidad son incorrectos: cualquier excepción significa "no válido"
     public boolean esValido(String token){
         try {
             Jwts.parser()

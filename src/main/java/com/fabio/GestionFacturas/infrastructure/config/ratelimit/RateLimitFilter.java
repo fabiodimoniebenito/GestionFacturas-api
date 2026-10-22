@@ -53,7 +53,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             }
         }
 
-        //Si la ruta no es de las que están limitadas, el bucket sigue con valor null y la deja pasar sin limitaciones
+        // Si la ruta no está limitada, el bucket sigue en null y la petición pasa sin restricciones
         if (bucket == null){
             filterChain.doFilter(request, response);
             return;
@@ -75,7 +75,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
         if (auth == null || !auth.isAuthenticated()) {
             return null;
         }
-        // JwtAuthenticationFilter stores the user id (Long) as principal; anonymous is a String
+        // JwtAuthenticationFilter guarda el id del usuario (Long) como principal; el anónimo es un String
         if (auth.getPrincipal() instanceof Long usuarioId) {
             return usuarioId;
         }

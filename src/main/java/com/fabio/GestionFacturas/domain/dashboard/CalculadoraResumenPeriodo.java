@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Pure-domain calculator: builds a ResumenPeriodo from gastos and ingresos that the caller
- * has already filtered to the period. No Spring/JPA on purpose (hexagonal architecture).
+ * Calculadora de dominio puro: construye un ResumenPeriodo a partir de gastos e ingresos que
+ * quien llama ya ha filtrado al periodo. Sin Spring/JPA a propósito (arquitectura hexagonal).
  */
 public class CalculadoraResumenPeriodo {
 
@@ -51,7 +51,7 @@ public class CalculadoraResumenPeriodo {
                 Dinero.deEuros(facturadoBase.subtract(gastosBase)));
     }
 
-    /** Amounts can be null in the domain (e.g. OCR drafts); they count as zero in the sums. */
+    /** Los importes pueden ser null en el dominio (p. ej. borradores de OCR); cuentan como cero en las sumas. */
     private BigDecimal cantidadOCero(Dinero dinero) {
         if (dinero == null) {
             return BigDecimal.ZERO;

@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Outbound port for the dashboard's read queries. Only the user's own data, filtered by
- * fechaEmision within [desde, hasta] (both inclusive). Implemented by {@code DashboardPersistenceAdapter}.
+ * Puerto de salida para las consultas del dashboard. Solo datos del propio usuario, filtrados por
+ * fechaEmision en [desde, hasta] (ambos inclusive). Lo implementa {@code DashboardPersistenceAdapter}.
  */
 public interface DashboardConsultaPort {
 
@@ -16,6 +16,6 @@ public interface DashboardConsultaPort {
 
     List<Ingreso> buscarIngresosPorPeriodo(Long usuarioId, LocalDate desde, LocalDate hasta);
 
-    /** The user's ingresos with estadoCobro PENDIENTE, oldest fechaEmision first. */
+    /** Ingresos del usuario con estadoCobro PENDIENTE, del más antiguo al más reciente por fechaEmision. */
     List<Ingreso> buscarIngresosPendientesDeCobro(Long usuarioId);
 }

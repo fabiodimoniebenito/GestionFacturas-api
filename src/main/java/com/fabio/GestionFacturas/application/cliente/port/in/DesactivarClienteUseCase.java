@@ -1,8 +1,8 @@
 package com.fabio.GestionFacturas.application.cliente.port.in;
 
 /**
- * Inbound port for soft-deleting a client (sets activo=false, row is kept). Implemented by
- * {@code DesactivarClienteService} — currently a TDD stub, see that class's Javadoc.
+ * Puerto de entrada para desactivar un cliente (borrado lógico: {@code activo=false}, la fila se conserva).
+ * Lo implementa {@code DesactivarClienteService}.
  */
 public interface DesactivarClienteUseCase {
 

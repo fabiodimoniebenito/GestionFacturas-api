@@ -5,11 +5,11 @@ import com.fabio.GestionFacturas.domain.cliente.Cliente;
 import java.util.List;
 import java.util.Optional;
 
-/** Inbound port for reading clients. Implemented by {@code ConsultarClientesService}. */
+/** Puerto de entrada para consultar clientes. Lo implementa {@code ConsultarClientesService}. */
 public interface ConsultarClientesUseCase {
 
     List<Cliente> listarPorUsuario(Long usuarioId);
 
-    /** Optional, not an exception: a cliente belonging to another user is treated as "not found" (access control). */
+    /** Devuelve Optional en lugar de lanzar excepción: un cliente de otro usuario se trata como "no encontrado". */
     Optional<Cliente> obtenerPorId(Long clienteId, Long usuarioId);
 }

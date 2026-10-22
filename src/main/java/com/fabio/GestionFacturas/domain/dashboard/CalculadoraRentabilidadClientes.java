@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Pure-domain calculator: groups gastos and ingresos (already filtered to the period by the caller)
- * by clienteId and delegates each group's figures to {@link CalculadoraResumenPeriodo}, so the
- * facturado/cobrado/beneficio rules are defined in one place only.
+ * Calculadora de dominio puro: agrupa por clienteId los gastos e ingresos (ya filtrados al periodo por quien llama)
+ * y delega las cifras de cada grupo en {@link CalculadoraResumenPeriodo}, de modo que las reglas de
+ * facturado/cobrado/beneficio estén definidas en un único sitio.
  * <p>
- * Result: one entry per client that appears in the input, ordered by clienteId, plus a trailing
- * "sin cliente" entry (clienteId null) only if some gasto has no client.
+ * Resultado: una entrada por cada cliente presente en la entrada, ordenadas por clienteId, más una entrada
+ * final "sin cliente" (clienteId null) solo si algún gasto no tiene cliente.
  */
 public class CalculadoraRentabilidadClientes {
 

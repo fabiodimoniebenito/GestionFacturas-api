@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Outbound port for Ingreso persistence. Defined here (application layer) so services depend
- * only on this contract; {@code IngresoPersistenceAdapter} (infrastructure) implements it with JPA,
- * keeping the dependency pointing inward per the hexagonal dependency rule.
+ * Puerto de salida para la persistencia de Ingreso. Está en la capa de aplicación para que los services
+ * dependan solo de este contrato; {@code IngresoPersistenceAdapter} (infraestructura) lo implementa con JPA.
  */
 public interface IngresoRepositoryPort {
 

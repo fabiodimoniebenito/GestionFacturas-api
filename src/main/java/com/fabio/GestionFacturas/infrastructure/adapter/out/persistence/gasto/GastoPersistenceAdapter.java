@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implements the outbound {@link GastoRepositoryPort} with Spring Data JPA — the piece the
- * application layer never sees directly. Full round trip for a write:
- * domain Gasto -> GastoMapper -> GastoJpaEntity -> GastoJpaRepository (Spring Data) -> DB,
- * then mapped straight back to domain before returning, so callers never touch the JPA type.
+ * Implementa {@link GastoRepositoryPort} con Spring Data JPA; la capa de aplicación nunca lo ve directamente.
+ * Recorrido completo de una escritura:
+ * Gasto de dominio -> GastoMapper -> GastoJpaEntity -> GastoJpaRepository (Spring Data) -> BD,
+ * y se vuelve a mapear a dominio antes de devolver, así quien llama nunca toca el tipo JPA.
  */
 @Component
 public class GastoPersistenceAdapter implements GastoRepositoryPort {

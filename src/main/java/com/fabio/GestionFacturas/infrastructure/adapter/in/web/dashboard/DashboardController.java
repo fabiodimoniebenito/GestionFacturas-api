@@ -23,8 +23,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Web adapter (inbound) for the dashboard. Depends only on the inbound use-case ports;
- * {@code usuarioId} always comes from {@code @AuthenticationPrincipal}, so a user only sees their own data.
+ * Adapter web (entrada) del dashboard. Depende solo de los puertos de entrada;
+ * {@code usuarioId} siempre viene de {@code @AuthenticationPrincipal}, así cada usuario ve solo sus datos.
  */
 @RestController
 @RequestMapping("/api/dashboard")

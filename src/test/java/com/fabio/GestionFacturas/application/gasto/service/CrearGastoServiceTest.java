@@ -24,10 +24,10 @@ import static org.assertj.core.api.Assertions.*;
 
 
 /**
- * Unit tests for CrearGastoService with the outbound ports mocked ({@code GastoRepositoryPort},
- * {@code ClienteRepositoryPort}) — verifies the service's own logic (Dinero conversion, EUR
- * default, cliente validation) in isolation from any real persistence adapter, per the
- * project's "mock the ports" testing convention.
+ * Tests unitarios de CrearGastoService con los puertos de salida mockeados ({@code GastoRepositoryPort},
+ * {@code ClienteRepositoryPort}). Verifican la lógica propia del service (conversión a Dinero, EUR por
+ * defecto, validación del cliente) sin ningún adapter de persistencia real, siguiendo la convención
+ * del proyecto de "mockear los puertos".
  */
 @ExtendWith(MockitoExtension.class)
 class CrearGastoServiceTest {

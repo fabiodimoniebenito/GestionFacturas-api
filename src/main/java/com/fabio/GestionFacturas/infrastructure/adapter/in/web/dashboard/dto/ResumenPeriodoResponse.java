@@ -2,7 +2,7 @@ package com.fabio.GestionFacturas.infrastructure.adapter.in.web.dashboard.dto;
 
 import java.math.BigDecimal;
 
-/** Response body for GET /api/dashboard/resumen — the period summary figures (total with IVA, base without). */
+/** Respuesta de GET /api/dashboard/resumen: cifras del resumen del periodo (total con IVA, base sin IVA). */
 public record ResumenPeriodoResponse(
         BigDecimal facturadoTotal,
         BigDecimal facturadoBase,

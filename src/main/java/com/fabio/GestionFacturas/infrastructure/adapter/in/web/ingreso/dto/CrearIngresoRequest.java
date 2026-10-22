@@ -6,7 +6,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/** Request DTO for issuing a new invoice — the web contract, never the domain Ingreso itself. */
+/** DTO de petición para emitir una factura: es el contrato web, nunca el Ingreso de dominio. */
 public record CrearIngresoRequest(
         Long clienteId,
         String concepto,

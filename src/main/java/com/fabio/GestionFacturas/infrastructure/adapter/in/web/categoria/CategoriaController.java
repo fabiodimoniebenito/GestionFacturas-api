@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Web adapter for categories. Minimal example of the full chain:
- * controller -> ConsultarCategoriaUseCase (port) -> ConsultarCategoriaService -> CategoriaRepositoryPort
- * (port) -> CategoriaPersistenceAdapter (JPA) -> domain Categoria -> CategoriaWebMapper -> response DTO.
+ * Adapter web de categorías. Ejemplo mínimo de la cadena completa:
+ * controller -> ConsultarCategoriaUseCase (puerto) -> ConsultarCategoriaService -> CategoriaRepositoryPort
+ * (puerto) -> CategoriaPersistenceAdapter (JPA) -> Categoria de dominio -> CategoriaWebMapper -> DTO de respuesta.
  */
 @RestController
 @RequestMapping("/api/categorias")

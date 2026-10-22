@@ -5,12 +5,12 @@ import com.fabio.GestionFacturas.domain.ingreso.Ingreso;
 import java.util.List;
 import java.util.Optional;
 
-/** Inbound port for reading invoices. Implemented by {@code ConsultarIngresosService}. */
+/** Puerto de entrada para consultar facturas emitidas. Lo implementa {@code ConsultarIngresosService}. */
 public interface ConsultarIngresosUseCase {
 
     List<Ingreso> listarPorUsuario(Long usuarioId);
 
-    /** Optional, not an exception: an ingreso belonging to another user is treated as "not found" (access control). */
+    /** Devuelve Optional en lugar de lanzar excepción: un ingreso de otro usuario se trata como "no encontrado". */
     Optional<Ingreso> obtenerPorId(Long ingresoId, Long usuarioId);
 
 }

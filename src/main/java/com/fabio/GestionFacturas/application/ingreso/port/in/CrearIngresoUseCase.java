@@ -5,12 +5,12 @@ import com.fabio.GestionFacturas.domain.ingreso.Ingreso;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/** Inbound port for registering a new invoice issued to a client. */
+/** Puerto de entrada para registrar una nueva factura emitida a un cliente. */
 public interface CrearIngresoUseCase {
 
     Ingreso crear(ComandoCrearIngreso comando);
 
-    /** Command object: the only shape the web layer is allowed to hand into the application layer. */
+    /** Comando: la única forma en que la capa web entrega datos a la capa de aplicación. */
     record ComandoCrearIngreso(
             Long usuarioId,
             Long clienteId,

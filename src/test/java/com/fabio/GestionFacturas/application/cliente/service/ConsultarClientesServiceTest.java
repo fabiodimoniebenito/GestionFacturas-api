@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for ConsultarClientesService, notably the access-control rule (empty for someone else's cliente). */
+/** Tests unitarios de ConsultarClientesService, sobre todo la regla de control de acceso (vacío si el cliente es de otro usuario). */
 @ExtendWith(MockitoExtension.class)
 class ConsultarClientesServiceTest {
 

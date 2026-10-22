@@ -11,9 +11,9 @@ import java.nio.file.Path;
 import static org.assertj.core.api.Assertions.*;
 
 /**
- * Tests LocalStorageAdapter against a real filesystem, not a mock — it's the adapter under
- * test, so exercising actual file I/O is the point. {@code @TempDir} gives each test an
- * isolated, auto-cleaned directory instead of touching the real configured storage path.
+ * Prueba LocalStorageAdapter contra un sistema de archivos real, sin mocks: es el adapter bajo prueba,
+ * así que lo que importa es ejercitar la E/S de archivos real. {@code @TempDir} da a cada test un
+ * directorio aislado que se limpia solo, sin tocar la ruta de almacenamiento configurada.
  */
 class LocalStorageAdapterTest {
 

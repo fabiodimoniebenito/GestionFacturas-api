@@ -25,9 +25,9 @@ import static org.mockito.Mockito.*;
 
 
 /**
- * Unit tests for AutenticarService (login) with all five ports/collaborators mocked.
- * Failure cases assert {@code verify(..., never())} on the refresh-token save, confirming
- * a rejected login never has the side effect of persisting a token.
+ * Tests unitarios de AutenticarService (login) con sus cinco puertos/colaboradores mockeados.
+ * Los casos de fallo comprueban con {@code verify(..., never())} que no se guarda el refresh token,
+ * es decir, que un login rechazado nunca persiste un token.
  */
 @ExtendWith(MockitoExtension.class)
 class AutenticarServiceTest {

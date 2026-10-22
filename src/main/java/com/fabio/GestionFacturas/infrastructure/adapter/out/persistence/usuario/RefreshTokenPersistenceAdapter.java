@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
- * Implements {@link RefreshTokenRepositoryPort} with Spring Data JPA. {@code guardar} is used
- * both to create a new token (login) and to persist a revocation (logout) — the entity's id
- * decides whether Hibernate inserts or updates.
+ * Implementa {@link RefreshTokenRepositoryPort} con Spring Data JPA. {@code guardar} sirve tanto
+ * para crear un token (login) como para persistir una revocación (logout): el id de la entidad
+ * decide si Hibernate inserta o actualiza.
  */
 @Component
 public class RefreshTokenPersistenceAdapter implements RefreshTokenRepositoryPort {

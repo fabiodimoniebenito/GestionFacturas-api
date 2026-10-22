@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/** Response DTO built by {@code IngresoWebMapper} from a domain Ingreso — the outbound half of the web contract. */
+/** DTO de respuesta que {@code IngresoWebMapper} construye desde un Ingreso de dominio (la parte de salida del contrato web). */
 public record IngresoResponse(
         Long id,
         Long usuarioId,

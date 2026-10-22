@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Implements {@link ObtenerPendientesCobroUseCase}: thin orchestration — loads the user's PENDIENTE
- * ingresos and delegates the total to the domain {@link CalculadoraPendientesCobro}.
+ * Implementa {@link ObtenerPendientesCobroUseCase}: carga los ingresos PENDIENTE del usuario
+ * y delega el total en {@link CalculadoraPendientesCobro}.
  */
 @Service
 public class PendientesCobroService implements ObtenerPendientesCobroUseCase {

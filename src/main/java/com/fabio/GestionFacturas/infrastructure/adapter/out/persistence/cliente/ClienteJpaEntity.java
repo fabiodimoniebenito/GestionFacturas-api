@@ -10,9 +10,9 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * Persistence model for Cliente — a plain JPA entity, separate from the domain
- * {@link com.fabio.GestionFacturas.domain.cliente.Cliente}. {@code ClienteMapper} converts
- * between the two; this class never leaves the persistence adapter.
+ * Modelo de persistencia de Cliente: entidad JPA simple, separada del
+ * {@link com.fabio.GestionFacturas.domain.cliente.Cliente} de dominio. {@code ClienteMapper} convierte
+ * entre ambos; esta clase nunca sale del adapter de persistencia.
  */
 @Entity
 @Table(name = "cliente")
@@ -38,12 +38,12 @@ public class ClienteJpaEntity {
     @Column(nullable = false)
     private boolean activo;
 
-    // insertable/updatable = false: set once by a DB default, never written from the Java side
-    // (same precedent as UsuarioJpaEntity — the domain object doesn't carry this field either)
+    // insertable/updatable = false: lo fija un valor por defecto de la BD y nunca se escribe desde Java
+    // (igual que en UsuarioJpaEntity; el objeto de dominio tampoco lleva este campo)
     @Column(name = "creado_en", insertable = false, updatable = false)
     private LocalDateTime creadoEn;
 
-    /** No-args constructor required by JPA/Hibernate. */
+    /** Constructor sin argumentos exigido por JPA/Hibernate. */
     protected ClienteJpaEntity() {
     }
 

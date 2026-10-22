@@ -3,7 +3,7 @@ package com.fabio.GestionFacturas.infrastructure.adapter.in.web.dashboard.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/** One item of GET /api/dashboard/pendientes-cobro — an ingreso still awaiting collection. */
+/** Elemento de GET /api/dashboard/pendientes-cobro: un ingreso aún pendiente de cobro. */
 public record IngresoPendienteResponse(
         Long id,
         Long clienteId,

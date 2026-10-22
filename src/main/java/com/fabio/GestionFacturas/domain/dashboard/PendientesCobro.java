@@ -6,10 +6,10 @@ import com.fabio.GestionFacturas.domain.shared.Dinero;
 import java.util.List;
 
 /**
- * Ingresos still awaiting collection, with the amount owed.
+ * Ingresos pendientes de cobro, con el importe adeudado.
  *
- * @param ingresos the PENDIENTE ingresos, in the order they were given
- * @param total    sum of their total (with IVA); never null, an absent amount is zero
+ * @param ingresos los ingresos PENDIENTE, en el orden recibido
+ * @param total    suma de su total (con IVA); nunca null, un importe ausente es cero
  */
 public record PendientesCobro(List<Ingreso> ingresos, Dinero total) {
 }

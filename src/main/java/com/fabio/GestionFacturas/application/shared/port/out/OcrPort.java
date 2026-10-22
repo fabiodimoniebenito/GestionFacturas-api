@@ -1,9 +1,9 @@
 package com.fabio.GestionFacturas.application.shared.port.out;
 
 /**
- * Outbound port: image bytes -> raw text, nothing more. Two adapters implement it —
- * {@code MockOcrAdapter} (default bean, dev/tests) and {@code TesseractOcrAdapter}
- * (behind the "ocr" Spring profile) — swappable without the service knowing which is active.
+ * Puerto de salida: bytes de imagen -> texto plano, nada más. Lo implementan dos adapters:
+ * {@code MockOcrAdapter} (por defecto, dev/tests) y {@code TesseractOcrAdapter} (perfil "ocr").
+ * Son intercambiables sin que el service sepa cuál está activo.
  */
 public interface OcrPort {
 

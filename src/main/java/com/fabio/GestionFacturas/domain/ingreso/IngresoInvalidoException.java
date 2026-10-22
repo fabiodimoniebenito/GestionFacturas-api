@@ -1,6 +1,6 @@
 package com.fabio.GestionFacturas.domain.ingreso;
 
-/** Thrown when an Ingreso invariant is violated. Mapped to HTTP 400 by GlobalExceptionHandler. */
+/** Se lanza al violarse una invariante de Ingreso. GlobalExceptionHandler la mapea a HTTP 400. */
 public class IngresoInvalidoException extends RuntimeException {
     public IngresoInvalidoException(String message) {
         super(message);

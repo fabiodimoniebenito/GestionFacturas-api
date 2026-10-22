@@ -3,15 +3,14 @@ package com.fabio.GestionFacturas.application.cliente.port.in;
 import com.fabio.GestionFacturas.domain.cliente.Cliente;
 
 /**
- * Inbound port for registering a new client. {@code ClienteController} depends only on this
- * interface, never on the concrete service — {@code CrearClienteService} implements it and is
- * injected by Spring at runtime.
+ * Puerto de entrada para registrar un cliente. {@code ClienteController} depende solo de esta
+ * interfaz; Spring inyecta la implementación ({@code CrearClienteService}) en tiempo de ejecución.
  */
 public interface CrearClienteUseCase {
 
     Cliente crear(ComandoCrearCliente comando);
 
-    /** Command object: the only shape the web layer is allowed to hand into the application layer. */
+    /** Comando: la única forma en que la capa web entrega datos a la capa de aplicación. */
     record ComandoCrearCliente(
             Long usuarioId,
             String nombre,

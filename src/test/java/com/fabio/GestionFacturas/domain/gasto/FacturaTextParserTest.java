@@ -9,9 +9,9 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.*;
 
 /**
- * Unit tests for FacturaTextParser, built/refined TDD-style against real OCR output —
- * each case targets one format quirk actual invoices produce (comma vs. dot decimals,
- * currency symbols, alternate date formats, missing fields).
+ * Tests unitarios de FacturaTextParser, construidos y refinados con TDD sobre salidas reales de OCR:
+ * cada caso cubre una particularidad de las facturas reales (decimales con coma o punto,
+ * símbolos de moneda, formatos de fecha alternativos, campos ausentes).
  */
 class FacturaTextParserTest {
 

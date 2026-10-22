@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/** Implements {@link RegistrarCobroUseCase}. */
+/** Implementa {@link RegistrarCobroUseCase}. */
 @Service
 public class RegistrarCobroService implements RegistrarCobroUseCase {
 
@@ -29,7 +29,7 @@ public class RegistrarCobroService implements RegistrarCobroUseCase {
 
         Ingreso ingreso = ingresoOpt.get();
 
-        // Access control: don't reveal that an ingreso exists if it belongs to someone else
+        // Control de acceso: no revelar que el ingreso existe si es de otro usuario
         if (!ingreso.getUsuarioId().equals(comando.usuarioId())) {
             throw new IngresoNoEncontradoException("El ingreso no existe");
         }

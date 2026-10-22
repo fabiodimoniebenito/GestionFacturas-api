@@ -5,8 +5,8 @@ import com.fabio.GestionFacturas.domain.ingreso.Ingreso;
 import java.time.LocalDate;
 
 /**
- * Inbound port for registering the collection of an invoice.
- * Implemented by {@code RegistrarCobroService}, currently a skeleton pending TDD by the project owner.
+ * Puerto de entrada para registrar el cobro de una factura.
+ * Lo implementa {@code RegistrarCobroService}.
  */
 public interface RegistrarCobroUseCase {
 

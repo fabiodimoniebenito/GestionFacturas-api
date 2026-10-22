@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * Implements {@link AutenticarUseCase} (login), depending on five outbound ports:
- * {@code UsuarioRepositoryPort} (look up the account), {@code PasswordEncoder} (BCrypt,
- * a Spring Security bean rather than a custom port), {@code TokenGeneradorPort} (issue the
- * JWT), and {@code RefreshTokenGeneradorPort} + {@code RefreshTokenRepositoryPort} (issue and
- * persist the refresh token). {@code AuthController} is the only caller.
+ * Implementa {@link AutenticarUseCase} (login). Depende de cinco puertos de salida:
+ * {@code UsuarioRepositoryPort} (buscar la cuenta), {@code PasswordEncoder} (BCrypt; es un bean de
+ * Spring Security, no un puerto propio), {@code TokenGeneradorPort} (emitir el JWT) y
+ * {@code RefreshTokenGeneradorPort} + {@code RefreshTokenRepositoryPort} (emitir y guardar el refresh token).
+ * Solo lo invoca {@code AuthController}.
  */
 @Service
 public class AutenticarService implements AutenticarUseCase {
@@ -68,7 +68,7 @@ public class AutenticarService implements AutenticarUseCase {
         String refreshTokenHash = refreshTokenGeneradorPort.hashear(refreshTokenPlano);
         LocalDateTime expiraEn = refreshTokenGeneradorPort.calcularExpiracion();
 
-        // Only the hash is persisted; the plain token is returned to the caller once and never stored
+        // Solo se persiste el hash; el token en claro se devuelve una vez y nunca se guarda
         RefreshToken refreshToken = new RefreshToken(false, null, usuario.getId(), refreshTokenHash, expiraEn, null);
         refreshTokenRepositoryPort.guardar(refreshToken);
 

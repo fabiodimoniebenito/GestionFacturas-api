@@ -26,15 +26,12 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Web adapter (inbound) for invoices issued to clients. Depends only on the inbound use-case
- * ports below — never on the services or repositories behind them. {@code IngresoWebMapper}
- * converts between request/response DTOs and domain objects, so an {@link Ingreso} never
- * crosses the HTTP boundary directly. {@code usuarioId} always comes from
- * {@code @AuthenticationPrincipal}, never trusted from the request body.
- *
- * <p>The cobro endpoints delegate to {@link RegistrarCobroUseCase}/{@link RevertirCobroUseCase},
- * which are currently skeleton implementations pending TDD by the project owner — calling them
- * throws {@code UnsupportedOperationException} at runtime until that logic is implemented.
+ * Adapter web (entrada) de facturas emitidas a clientes. Depende solo de los puertos de entrada
+ * inferiores, nunca de los services ni repositorios que hay detrás. {@code IngresoWebMapper}
+ * convierte entre DTOs y objetos de dominio, así un {@link Ingreso} nunca cruza directamente la
+ * frontera HTTP. {@code usuarioId} siempre viene de {@code @AuthenticationPrincipal}, nunca del cuerpo de la petición.
+ * <p>
+ * Los endpoints de cobro delegan en {@link RegistrarCobroUseCase} y {@link RevertirCobroUseCase}.
  */
 @RestController
 @RequestMapping("/api/ingresos")

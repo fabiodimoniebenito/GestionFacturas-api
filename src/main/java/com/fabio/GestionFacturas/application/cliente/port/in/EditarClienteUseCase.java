@@ -3,14 +3,14 @@ package com.fabio.GestionFacturas.application.cliente.port.in;
 import com.fabio.GestionFacturas.domain.cliente.Cliente;
 
 /**
- * Inbound port for editing a client's mutable data. Implemented by {@code EditarClienteService},
- * which owns the ownership check (a client belonging to another user is rejected, not edited).
+ * Puerto de entrada para editar los datos modificables de un cliente. Lo implementa
+ * {@code EditarClienteService}, que comprueba que el cliente pertenezca al usuario.
  */
 public interface EditarClienteUseCase {
 
     Cliente editar(ComandoEditarCliente comando);
 
-    /** nif is intentionally absent here — it's immutable once the client is created. */
+    /** El nif no se incluye: es inmutable una vez creado el cliente. */
     record ComandoEditarCliente(
             Long clienteId,
             Long usuarioId,

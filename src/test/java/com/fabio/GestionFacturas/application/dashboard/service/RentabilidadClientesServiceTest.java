@@ -21,7 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/** Unit tests for RentabilidadClientesService: orchestration only — the rules live in CalculadoraRentabilidadClientesTest. */
+/** Tests unitarios de RentabilidadClientesService: solo la orquestación; las reglas están en CalculadoraRentabilidadClientesTest. */
 @ExtendWith(MockitoExtension.class)
 class RentabilidadClientesServiceTest {
 

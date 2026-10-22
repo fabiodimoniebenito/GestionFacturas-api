@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/** Implements {@link DesactivarClienteUseCase}. */
+/** Implementa {@link DesactivarClienteUseCase}. */
 @Service
 public class DesactivarClienteService implements DesactivarClienteUseCase {
 
@@ -29,7 +29,7 @@ public class DesactivarClienteService implements DesactivarClienteUseCase {
 
         Cliente cliente = clienteOpt.get();
 
-        // Access control: don't reveal that a cliente exists if it belongs to someone else
+        // Control de acceso: no revelar que el cliente existe si es de otro usuario
         if (!cliente.getUsuarioId().equals(comando.usuarioId())) {
             throw new ClienteNoEncontradoException("El cliente no existe");
         }

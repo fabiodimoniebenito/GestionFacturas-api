@@ -17,9 +17,9 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for CrearIngresoService with the outbound port mocked ({@code IngresoRepositoryPort})
- * — verifies the service's own logic (Dinero conversion, EUR default) in isolation from any real
- * persistence adapter, per the project's "mock the ports" testing convention.
+ * Tests unitarios de CrearIngresoService con el puerto de salida mockeado ({@code IngresoRepositoryPort}).
+ * Verifican la lógica propia del service (conversión a Dinero, EUR por defecto) sin ningún adapter
+ * de persistencia real, siguiendo la convención del proyecto de "mockear los puertos".
  */
 @ExtendWith(MockitoExtension.class)
 class CrearIngresoServiceTest {

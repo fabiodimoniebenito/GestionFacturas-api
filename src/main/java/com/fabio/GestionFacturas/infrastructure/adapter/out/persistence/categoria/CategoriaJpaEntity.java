@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/** Persistence model for Categoria — mapped to/from the domain object by {@code CategoriaMapper}. */
+/** Modelo de persistencia de Categoria; {@code CategoriaMapper} lo convierte desde y hacia el objeto de dominio. */
 @Entity
 @Table(name = "categoria")
 public class CategoriaJpaEntity {
@@ -22,7 +22,7 @@ public class CategoriaJpaEntity {
     @Column(name = "deducible_defecto", nullable = false)
     private boolean deduciblePorDefecto;
 
-    /** No-args constructor required by JPA/Hibernate. */
+    /** Constructor sin argumentos exigido por JPA/Hibernate. */
     protected CategoriaJpaEntity() {
     }
 

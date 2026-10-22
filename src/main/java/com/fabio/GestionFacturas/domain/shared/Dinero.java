@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Value object wrapping a monetary amount + ISO currency code, so money is never a bare BigDecimal.
- * The compact constructor below runs on every instance (including record deserialization),
- * enforcing invariants (max 2 decimals, valid 3-letter currency) at construction time.
+ * Objeto de valor que envuelve un importe y su código de moneda ISO, para no usar nunca un BigDecimal suelto.
+ * El constructor compacto se ejecuta en cada instancia (también al deserializar el record)
+ * y valida las invariantes: máximo 2 decimales y moneda de 3 letras.
  */
 public record Dinero(BigDecimal cantidad, String moneda) {
 

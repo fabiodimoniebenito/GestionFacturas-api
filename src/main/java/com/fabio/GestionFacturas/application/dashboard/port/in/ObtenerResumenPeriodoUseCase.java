@@ -4,7 +4,7 @@ import com.fabio.GestionFacturas.domain.dashboard.ResumenPeriodo;
 
 import java.time.LocalDate;
 
-/** Inbound port for the dashboard period summary. Implemented by {@code ResumenPeriodoService}. */
+/** Puerto de entrada para el resumen de periodo del dashboard. Lo implementa {@code ResumenPeriodoService}. */
 public interface ObtenerResumenPeriodoUseCase {
 
     ResumenPeriodo obtenerResumen(ComandoObtenerResumen comando);

@@ -2,7 +2,7 @@ package com.fabio.GestionFacturas.domain.categoria;
 
 import java.util.Objects;
 
-/** Expense category (e.g. "Transporte"), with a default deductibility used when a Gasto is first classified. */
+/** Categoría de gasto (p. ej. "Transporte"), con una deducibilidad por defecto que se aplica al clasificar un Gasto. */
 public class Categoria {
 
     private final Long id;
