@@ -1,9 +1,11 @@
 package com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto;
 
 import com.fabio.GestionFacturas.application.gasto.port.in.CrearGastoUseCase.ComandoCrearGasto;
+import com.fabio.GestionFacturas.application.gasto.port.in.EditarGastoUseCase.ComandoEditarGasto;
 import com.fabio.GestionFacturas.domain.gasto.Gasto;
 import com.fabio.GestionFacturas.domain.shared.Dinero;
 import com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto.dto.CrearGastoRequest;
+import com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto.dto.EditarGastoRequest;
 import com.fabio.GestionFacturas.infrastructure.adapter.in.web.gasto.dto.GastoResponse;
 
 /**
@@ -25,6 +27,22 @@ public class GastoWebMapper {
                 request.total(),
                 request.moneda(),
                 request.clienteId()
+        );
+    }
+
+    public static ComandoEditarGasto aComando(EditarGastoRequest request, Long gastoId, Long usuarioId) {
+        return new ComandoEditarGasto(
+                gastoId,
+                usuarioId,
+                request.emisor(),
+                request.fechaEmision(),
+                request.baseImponible(),
+                request.iva(),
+                request.total(),
+                request.moneda(),
+                request.clienteId(),
+                request.categoriaId(),
+                request.deducible()
         );
     }
 

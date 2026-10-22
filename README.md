@@ -92,6 +92,13 @@ flowchart TB
 ## Módulos de dominio
 
 - **gasto** — dinero que sale. Manual o por OCR. Opcionalmente imputable a un cliente.
+  Se puede editar (`PUT /api/gastos/{id}`) y marcar como revisado
+  (`POST /api/gastos/{id}/revisar`). Estados: BORRADOR, PROCESADA, REVISADA, EXPORTADA.
+  Revisar solo es posible desde BORRADOR o PROCESADA y exige fecha y total; un gasto
+  EXPORTADA no se puede editar. Errores: 404 (gasto o categoría inexistente, o de otro
+  usuario) y 409 (conflicto de estado).
+- **categoria** — catálogo global de categorías de gasto, con 11 categorías básicas
+  sembradas por migración (ninguna marcada como deducible por defecto).
 - **ingreso** — dinero que entra: facturas emitidas a un cliente (obligatorio). Estado de
   cobro (PENDIENTE/COBRADA) que el usuario marca a mano.
 - **cliente** — a quién factura el usuario. Soft delete.
@@ -123,6 +130,8 @@ comprobadas a mano):
 
 - Contraseñas con **BCrypt**. Autenticación **JWT**: access token corto + refresh token
   revocable (hash SHA-256 en BD). Logout real. Control de acceso por `usuarioId`.
+- Los endpoints protegidos responden **401** con cuerpo JSON `{"error":"..."}` y cabecera
+  `WWW-Authenticate: Bearer` si el token falta, es inválido o ha caducado.
 - **Rate limiting** (Bucket4j, en memoria): login 10/min por IP, registro 5/hora por IP,
   resto de endpoints 50/min por usuario. Supera el límite → HTTP 429 con `Retry-After`.
 
