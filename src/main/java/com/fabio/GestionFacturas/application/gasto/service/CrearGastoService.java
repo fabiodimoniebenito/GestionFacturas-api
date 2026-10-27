@@ -1,12 +1,16 @@
 package com.fabio.GestionFacturas.application.gasto.service;
 
 import com.fabio.GestionFacturas.application.cliente.port.out.ClienteRepositoryPort;
+import com.fabio.GestionFacturas.domain.cliente.Cliente;
 import com.fabio.GestionFacturas.application.gasto.port.in.CrearGastoUseCase;
 import com.fabio.GestionFacturas.application.gasto.port.out.GastoRepositoryPort;
 import com.fabio.GestionFacturas.domain.gasto.Gasto;
 import com.fabio.GestionFacturas.domain.shared.Dinero;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.fabio.GestionFacturas.domain.cliente.ClienteNoEncontradoException;
+
+import java.util.Optional;
 
 /**
  * Implementa {@link CrearGastoUseCase}. Lo invoca {@code GastoController} y habla solo con
