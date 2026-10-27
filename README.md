@@ -115,16 +115,17 @@ comprobadas a mano):
   cobrado (con IVA y sin IVA), gastos, y cuatro cifras de beneficio (de caja y facturado,
   cada una en total y en base imponible).
 - **`GET /api/dashboard/rentabilidad-clientes?desde=...&hasta=...`** — el mismo resumen,
-  desglosado por cliente. Los gastos sin cliente asignado se agrupan en una entrada "sin
-  cliente" aparte.
+  desglosado por cliente; cada entrada incluye `clienteId` y `clienteNombre` (también de
+  clientes dados de baja). Los gastos sin cliente asignado se agrupan en una entrada "sin
+  cliente" aparte, con ambos campos a `null`. El rango `desde`/`hasta` es inclusivo en los
+  dos extremos.
 - **`GET /api/dashboard/pendientes-cobro`** — lista de ingresos aún no cobrados, con su
   importe total agregado.
 
-> ⚠️ **Incidencia conocida, en investigación:** en pruebas manuales, con dos clientes activos
-> con ingresos cada uno, `rentabilidad-clientes` devolvió solo uno de los dos. La calculadora
-> de dominio y el servicio se revisaron y parecen correctos; se sospecha del adaptador de
-> persistencia que trae los ingresos del periodo, pero no está confirmado. No dar por fiable
-> esta vista con más de un cliente hasta verificarlo con datos controlados.
+> ✅ **Incidencia revisada, no era un fallo:** el caso en que `rentabilidad-clientes` devolvió
+> un solo cliente se reprodujo con datos controlados (varios clientes, fechas justo dentro y
+> fuera del rango) y se comparó con SQL: se devuelven todos los clientes con ingresos en el
+> periodo. Lo más probable es que los ingresos del segundo cliente estuvieran fuera del rango.
 
 ## Seguridad
 
@@ -159,7 +160,7 @@ mock por defecto. Pendiente: PDF, emisor, OCR asíncrono, MinIO, digitalización
 - **Fase 1 — Digitalización (OCR)** ✅ funcional para gastos.
 - **Fase 2 — Ingresos y clientes** ✅ cerrada.
 - **Fase 3 — Dashboard** ✅ funcional — resumen, rentabilidad por cliente, pendientes de
-  cobro (ver incidencia conocida arriba, en investigación).
+  cobro (incidencia revisada: no era un fallo).
 
 ## Roadmap
 
@@ -169,7 +170,7 @@ mock por defecto. Pendiente: PDF, emisor, OCR asíncrono, MinIO, digitalización
 | Seguridad | JWT + rate limiting (hecho; falta rotación) |
 | Fase 1 | OCR + almacenamiento de archivos (hecho; faltan mejoras) |
 | Fase 2 | Ingresos y clientes (hecho) |
-| Fase 3 | Dashboard (hecho; incidencia en rentabilidad multi-cliente en investigación) |
+| Fase 3 | Dashboard (hecho) |
 | Fase 4 | Exportación al gestor, pulido, despliegue |
 | Cliente | App KMP (móvil + escritorio) consumiendo la API |
 | v1+ | Duplicados, recurrentes, presupuestos, categorización automática... |

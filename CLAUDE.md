@@ -132,20 +132,21 @@ infrastructure
     - **Pendientes de cobro**: lists the user's ingresos with estadoCobro PENDIENTE plus an
       aggregate total.
 
-### KNOWN ISSUE — investigate before relying on rentabilidad-por-cliente in multi-client scenarios
-Observed in manual testing: with 2 active clients where client A has ingresos and client B
-also has ingresos (no gastos for either), GET /api/dashboard/rentabilidad-clientes returned
-only client A's entry — client B was missing from the response, even though its ingresos'
-figures were confirmed present in the database within the queried date range (not yet fully
-confirmed whether the dates were in range — that check was left unfinished). The domain
-calculator (CalculadoraRentabilidadClientes) was inspected and looks correct (grouping logic
-handles multiple clienteIds properly); RentabilidadClientesService was also inspected and is
-a thin, correct pass-through. The suspected location is DashboardPersistenceAdapter's
-buscarIngresosPorPeriodo implementation (or the underlying JPA query) possibly not returning
-all clients' ingresos — NOT yet confirmed. Do not assume this is fixed; verify with a
-controlled multi-client dataset (check exact fechaEmision values against the query range
-first) before treating rentabilidad-por-cliente as reliable for more than one client with
-data. Do not silently "fix" this without diagnosing the actual root cause and reporting it.
+### RESOLVED — rentabilidad-por-cliente with several clients: not a bug
+The earlier report (2 active clients with ingresos, only one in the response) was checked
+with a controlled dataset against the real Postgres: 2 active clients plus 1 inactive, ingresos
+dated desde-1, desde, mid-range, hasta and hasta+1, API response compared with a SQL
+ground truth (GROUP BY cliente_id ... BETWEEN desde AND hasta). Every client with ingresos in
+range was returned, and the range is inclusive on both ends (fecha_emision in [desde, hasta]:
+`findByUsuarioIdAndFechaEmisionBetween`); ingresos one day outside were excluded, as designed.
+No code defect found in the adapter, service or calculator. The original dev data no longer
+existed, so the most likely explanation is that client B's ingresos were outside the queried
+range (the check that was left unfinished). Lesson: when a client is "missing", compare its
+exact fecha_emision values with desde/hasta first.
+
+- Each entry carries `clienteNombre` (nullable). `RentabilidadClientesService` resolves names with ONE
+  batch call to `ClienteRepositoryPort.buscarPorIdsYUsuario` (includes INACTIVE clientes, only the
+  user's own); the "sin cliente" entry keeps `clienteId` and `clienteNombre` null.
 
 ## Security (implemented)
 
