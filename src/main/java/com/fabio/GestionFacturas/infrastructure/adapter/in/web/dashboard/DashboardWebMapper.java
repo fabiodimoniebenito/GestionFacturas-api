@@ -43,7 +43,7 @@ public class DashboardWebMapper {
 
     public static List<RentabilidadClienteResponse> aRespuesta(List<RentabilidadCliente> rentabilidades) {
         return rentabilidades.stream()
-                .map(r -> new RentabilidadClienteResponse(r.clienteId(), aRespuesta(r.resumen())))
+                .map(r -> new RentabilidadClienteResponse(r.clienteId(), r.clienteNombre(), aRespuesta(r.resumen())))
                 .toList();
     }
 
