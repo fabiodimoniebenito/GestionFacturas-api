@@ -4,6 +4,7 @@ import com.fabio.GestionFacturas.application.cliente.port.out.ClienteRepositoryP
 import com.fabio.GestionFacturas.domain.cliente.Cliente;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,17 @@ public class ClientePersistenceAdapter implements ClienteRepositoryPort {
     @Override
     public List<Cliente> buscarPorUsuario(Long usuarioId) {
         return clienteJpaRepository.findByUsuarioIdAndActivoTrue(usuarioId)
+                .stream()
+                .map(ClienteMapper::aDominio)
+                .toList();
+    }
+
+    @Override
+    public List<Cliente> buscarPorIdsYUsuario(Collection<Long> ids, Long usuarioId) {
+        if (ids.isEmpty()) {
+            return List.of();
+        }
+        return clienteJpaRepository.findByUsuarioIdAndIdIn(usuarioId, ids)
                 .stream()
                 .map(ClienteMapper::aDominio)
                 .toList();
