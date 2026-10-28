@@ -1,6 +1,6 @@
 # GestionFacturas — Control económico para autónomos
 
-> ⚠️ **Proyecto en desarrollo activo.** Este README describe el estado actual y la
+> **Proyecto en desarrollo activo.** Este README describe el estado actual y la
 > dirección del proyecto, y evoluciona con él.
 
 Aplicación para que **freelances y autónomos individuales** lleven el control de su
@@ -122,7 +122,7 @@ comprobadas a mano):
 - **`GET /api/dashboard/pendientes-cobro`** — lista de ingresos aún no cobrados, con su
   importe total agregado.
 
-> ✅ **Incidencia revisada, no era un fallo:** el caso en que `rentabilidad-clientes` devolvió
+> **Incidencia revisada, no era un fallo:** el caso en que `rentabilidad-clientes` devolvió
 > un solo cliente se reprodujo con datos controlados (varios clientes, fechas justo dentro y
 > fuera del rango) y se comparó con SQL: se devuelven todos los clientes con ingresos en el
 > periodo. Lo más probable es que los ingresos del segundo cliente estuvieran fuera del rango.
