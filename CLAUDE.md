@@ -242,6 +242,10 @@ exact fecha_emision values with desde/hasta first.
   and do not claim something "works" without comparing against real data.
 - Show a summary of changed files before considering the task done.
 - If a request would violate the architecture rules, flag it instead of doing it.
+- API contract: the client keeps a snapshot of this API's OpenAPI document. Whenever a task
+    adds, removes or changes an endpoint, a request/response field or an enum value, state it
+    explicitly at the end of the summary so the owner runs /refrescar-contrato in the client
+    repository. Do not change the contract tooling here.
 
 ## Git workflow
 - Before a new feature/change, create a branch: git checkout -b feature/<desc>
