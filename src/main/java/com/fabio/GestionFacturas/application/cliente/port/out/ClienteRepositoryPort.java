@@ -26,5 +26,6 @@ public interface ClienteRepositoryPort {
     List<Cliente> buscarPorIdsYUsuario(Collection<Long> ids, Long usuarioId);
 
     /** Permite aplicar la regla de un NIF por usuario antes de crear un cliente. */
+    //Mas adelante se solucionará el problema que existe al eliminar un NIF que luego no se pued volver a usar.
     Optional<Cliente> buscarPorUsuarioYNif(Long usuarioId, String nif);
 }
