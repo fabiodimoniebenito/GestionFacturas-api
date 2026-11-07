@@ -22,6 +22,7 @@ REST API so the client is decoupled.
 - OCR: Tesseract via Tess4J (Spanish), selected by the `ocr` Spring profile; mock OCR is
   the default (dev and tests)
 - File storage: local filesystem (MinIO planned)
+- Excel export: Apache POI (poi-ooxml 6.0.0), ONLY in `adapter/out/export`
 - springdoc-openapi 3.x (compatible with Spring Boot 4; do NOT downgrade to 2.x)
 - Maven; JUnit 5 + Mockito + AssertJ
 
@@ -73,20 +74,21 @@ domain
 └── shared     -> Dinero (value object)
 
 application  -> per concept (gasto, ingreso, cliente, categoria, usuario, dashboard):
-                port/in, port/out, service. shared/port/out: OcrPort, FileStoragePort,
-                ExportPort. usuario/port/out: UsuarioRepositoryPort, TokenGeneradorPort,
+                port/in, port/out, service (+ exportacion). shared/port/out: OcrPort, FileStoragePort,
+                ExportPort (+ DatosExportacion, plain data object). usuario/port/out: UsuarioRepositoryPort, TokenGeneradorPort,
                 RefreshTokenRepositoryPort, RefreshTokenGeneradorPort.
                 dashboard/port/out: DashboardConsultaPort (buscarGastosPorPeriodo,
                 buscarIngresosPorPeriodo, buscarIngresosPendientesDeCobro).
 
 infrastructure
 ├── adapter/in/web          -> gasto, ingreso, cliente, categoria, usuario (AuthController),
-│                              dashboard, health, GlobalExceptionHandler
+│                              dashboard, exportacion, health, GlobalExceptionHandler
 ├── adapter/out/persistence -> gasto, ingreso, cliente, categoria, usuario (+ refresh_token),
 │                              dashboard (DashboardPersistenceAdapter — read-only queries,
 │                              reuses/extends GastoJpaRepository and IngresoJpaRepository)
 ├── adapter/out/ocr         -> MockOcrAdapter (default), TesseractOcrAdapter (@Profile("ocr"))
 ├── adapter/out/storage     -> LocalStorageAdapter (FileStoragePort)
+├── adapter/out/export      -> ExcelExportAdapter (ExportPort, Apache POI)
 └── config                  -> DomainBeansConfig, SecurityConfig,
                                 config/ratelimit (RateLimitFilter),
                                 config/security (JwtTokenProvider, JwtAuthenticationFilter,
@@ -116,6 +118,10 @@ infrastructure
 - **usuario**: identity + JWT auth.
 - **categoria**: expense categories (read-only catalog). Seeded by V8 (11 basic categories,
   all `deducible_defecto = false`; the app must not suggest anything fiscal).
+- **exportacion**: `GET /api/exportacion/excel?desde&hasta` (ExportarPeriodoUseCase) returns an
+  .xlsx (sheets Resumen, Ingresos, Gastos, Pendientes de cobro, Rentabilidad por cliente). The
+  service reuses the dashboard calculators (same numbers, no new calculation logic); the adapter
+  writes money as numeric cells, dates as date cells and text always as string cells (no formulas).
 - **dashboard**: read-only aggregation views over gasto/ingreso/cliente — no own table.
   Three views:
     - **Resumen de periodo** (`CalculadoraResumenPeriodo`): given period-filtered gastos and
