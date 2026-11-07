@@ -35,6 +35,7 @@ al gestor: le da el trabajo ya ordenado.
 | Seguridad | Spring Security + JWT (access + refresh revocable) |
 | Rate limiting | Bucket4j (en memoria) |
 | OCR | Tesseract vía Tess4J (español); mock para desarrollo/tests |
+| Exportación Excel | Apache POI (poi-ooxml) |
 | Almacenamiento de archivos | Sistema de archivos local (MinIO planificado) |
 | Documentación API | OpenAPI / Swagger (springdoc 3.x) |
 | Build | Maven |
@@ -126,6 +127,14 @@ comprobadas a mano):
 > un solo cliente se reprodujo con datos controlados (varios clientes, fechas justo dentro y
 > fuera del rango) y se comparó con SQL: se devuelven todos los clientes con ingresos en el
 > periodo. Lo más probable es que los ingresos del segundo cliente estuvieran fuera del rango.
+
+## Exportación a Excel
+
+- **`GET /api/exportacion/excel?desde=...&hasta=...`** — descarga un `.xlsx`
+  (`gestionfacturas_<desde>_<hasta>.xlsx`) con las hojas Resumen, Ingresos, Gastos, Pendientes
+  de cobro y Rentabilidad por cliente. Las cifras son las mismas que las del dashboard (usa
+  sus calculadoras). Importes numéricos, fechas reales y textos siempre como cadena (sin
+  fórmulas).
 
 ## Seguridad
 
