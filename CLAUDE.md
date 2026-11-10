@@ -180,12 +180,23 @@ exact fecha_emision values with desde/hasta first.
 
 - OcrPort: byte[] -> String plain text ONLY, no field parsing.
 - MockOcrAdapter default; TesseractOcrAdapter @Profile("ocr"). Images only; PDF pending.
+- Upload limits (application.yaml): max-file-size 10MB, max-request-size 11MB.
+- Input validation lives in DigitalizarFacturaService (not the controller): rejects empty files and
+  any content type other than image/jpeg and image/png (ArchivoInvalidoException; PDF gets its own
+  "not supported yet" message). The controller only converts MultipartFile -> bytes/name/type.
+- If OCR, parsing or saving fails after the file was stored, the service deletes the stored file
+  (FileStoragePort.eliminar) and rethrows the original error; a failing cleanup never masks it.
+- The OCR text is never logged (it is the user's invoice content).
 - FacturaTextParser (domain): text -> DatosFacturaExtraidos. Built with TDD.
 - DigitalizarFacturaService: store -> OCR -> parse -> create Gasto in BORRADOR.
 
 ## Error handling (GlobalExceptionHandler, @RestControllerAdvice)
 - GastoInvalidoException / ClienteInvalidoException / IngresoInvalidoException /
-  IllegalArgumentException -> 400
+  ArchivoInvalidoException / IllegalArgumentException -> 400
+- Missing `archivo` multipart part (MissingServletRequestPartException) -> 400
+- MaxUploadSizeExceededException (over 10 MB) -> 413
+- OcrException (unreadable image) -> 422 generic message; OcrNoDisponibleException (OCR engine
+  misconfigured: missing tessdata / native lib) -> 503. Technical detail is logged, never returned.
 - MethodArgumentNotValidException -> 400 with field errors
 - EmailYaRegistradoException / ClienteDuplicadoException -> 409
 - CobroInvalidoException -> 409

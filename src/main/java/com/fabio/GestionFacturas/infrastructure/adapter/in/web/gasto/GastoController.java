@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Adapter web (entrada) de gastos. Depende solo de los tres puertos de entrada inferiores,
@@ -40,9 +39,6 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/gastos")
 public class GastoController {
-
-    private static final Set<String> TIPOS_PERMITIDOS =
-            Set.of("application/pdf", "image/jpeg", "image/png", "image/webp");
 
     private final CrearGastoUseCase crearGastoUseCase;
     private final ConsultarGastosUseCase consultarGastosUseCase;
@@ -103,15 +99,9 @@ public class GastoController {
     @PostMapping(path = "/digitalizar",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<GastoResponse> digitalizar(@RequestParam("archivo") MultipartFile archivo,
                                                       @AuthenticationPrincipal Long usuarioId) {
-        if (archivo.isEmpty()) {
-            throw new IllegalArgumentException("El archivo no puede estar vacío");
-        }
-
         String contentType = archivo.getContentType();
-        if (!TIPOS_PERMITIDOS.contains(contentType)) {
-            throw new IllegalArgumentException("Tipo de archivo no soportado: " + contentType);
-        }
 
+        // La validación (vacío, tipo) vive en DigitalizarFacturaService, no aquí.
         // MultipartFile es un tipo del framework: se convierte a byte[] aquí mismo, porque los puertos
         // de aplicación no pueden depender de tipos de Spring MVC (ver el Javadoc de ComandoDigitalizarFactura).
         byte[] contenido;

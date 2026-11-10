@@ -50,15 +50,28 @@ public class TesseractOcrAdapter implements OcrPort {
             throw new OcrException("Formato de archivo no soportado por OCR todavía (ej. PDF); solo imágenes por ahora");
         }
 
-
+        // Nunca se escribe el texto reconocido en logs: es contenido de la factura del usuario
         try {
-            String texto = tesseract.doOCR(imagen);
-            System.out.println("=== TEXTO OCR ===");
-            System.out.println(texto);
-            System.out.println("=================");
-            return texto;
+            return tesseract.doOCR(imagen);
         } catch (TesseractException e) {
+            if (esProblemaDeConfiguracion(e)) {
+                throw new OcrNoDisponibleException("Tesseract no está configurado correctamente (¿falta tessdata?): " + e.getMessage(), e);
+            }
             throw new OcrException("Fallo al ejecutar OCR con Tesseract", e);
+        } catch (UnsatisfiedLinkError | NoClassDefFoundError e) {
+            throw new OcrNoDisponibleException("Librería nativa de Tesseract no disponible", e);
         }
+    }
+
+    private boolean esProblemaDeConfiguracion(TesseractException e) {
+        String mensaje = e.getMessage();
+        if (mensaje == null) {
+            return false;
+        }
+        String minusculas = mensaje.toLowerCase();
+        return minusculas.contains("data file")
+                || minusculas.contains("tessdata")
+                || minusculas.contains("traineddata")
+                || minusculas.contains("failed loading language");
     }
 }
