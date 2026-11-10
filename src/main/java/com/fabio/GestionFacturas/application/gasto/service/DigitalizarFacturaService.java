@@ -8,8 +8,11 @@ import com.fabio.GestionFacturas.domain.gasto.DatosFacturaExtraidos;
 import com.fabio.GestionFacturas.domain.gasto.FacturaTextParser;
 import com.fabio.GestionFacturas.domain.gasto.Gasto;
 import com.fabio.GestionFacturas.domain.shared.Dinero;
+import com.fabio.GestionFacturas.domain.gasto.ArchivoInvalidoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 /**
  * Implementa {@link DigitalizarFacturaUseCase} y orquesta la digitalización de una factura
@@ -25,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class DigitalizarFacturaService implements DigitalizarFacturaUseCase {
+
+    private static final Set<String> TIPOS_PERMITIDOS = Set.of("image/jpeg", "image/png");
 
     private final FileStoragePort fileStoragePort;
     private final OcrPort ocrPort;
@@ -44,9 +49,45 @@ public class DigitalizarFacturaService implements DigitalizarFacturaUseCase {
     @Override
     @Transactional
     public Gasto digitalizar(ComandoDigitalizarFactura comando) {
+        validarArchivo(comando);
+
         // Paso 1: guardar el archivo subido; en el Gasto se conserva la referencia, no los bytes
         String referencia = fileStoragePort.guardar(comando.contenido(), comando.nombreOriginal(), comando.contentType());
 
+        // Si falla cualquier paso posterior, el archivo guardado quedaría huérfano (la transacción solo revierte la BD)
+        try {
+            return procesar(comando, referencia);
+        } catch (RuntimeException e) {
+            eliminarArchivoHuerfano(referencia, e);
+            throw e;
+        }
+    }
+
+    private void validarArchivo(ComandoDigitalizarFactura comando) {
+        if (comando.contenido() == null || comando.contenido().length == 0) {
+            throw new ArchivoInvalidoException("El archivo no puede estar vacío");
+        }
+        String contentType = comando.contentType();
+        if (contentType == null || !TIPOS_PERMITIDOS.contains(contentType)) {
+            if ("application/pdf".equals(contentType)) {
+                throw new ArchivoInvalidoException(
+                        "Los archivos PDF todavía no están soportados; sube una imagen JPG o PNG");
+            }
+            throw new ArchivoInvalidoException(
+                    "Tipo de archivo no soportado: solo se admiten imágenes JPG o PNG");
+        }
+    }
+
+    private void eliminarArchivoHuerfano(String referencia, RuntimeException causaOriginal) {
+        try {
+            fileStoragePort.eliminar(referencia);
+        } catch (RuntimeException falloLimpieza) {
+            // No debe tapar el error original; se deja constancia en la excepción original
+            causaOriginal.addSuppressed(falloLimpieza);
+        }
+    }
+
+    private Gasto procesar(ComandoDigitalizarFactura comando, String referencia) {
         // Paso 2: el adapter OCR convierte la imagen en texto (cuál se usa depende del perfil de Spring activo)
         String textoOcr = ocrPort.extraerTexto(comando.contenido());
 

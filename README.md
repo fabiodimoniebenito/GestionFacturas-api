@@ -152,7 +152,6 @@ comprobadas a mano):
 - Cabeceras de seguridad HTTP (HSTS, CSP...) al desplegar tras HTTPS.
 - Rate limiting distribuido con Redis (al escalar a varias instancias).
 - IP real vía `X-Forwarded-For` (tras un proxy de confianza).
-- Límite de tamaño de peticiones y subidas.
 - Expiración de buckets de rate limiting inactivos.
 - Secretos en gestor de secretos en producción.
 
@@ -160,7 +159,9 @@ comprobadas a mano):
 
 Subes una imagen de factura -> se almacena -> Tesseract extrae el texto -> `FacturaTextParser`
 saca los campos -> se crea el gasto en BORRADOR para revisar. OCR real con el perfil `ocr`;
-mock por defecto. Pendiente: PDF, emisor, OCR asíncrono, MinIO, digitalización de ingresos.
+mock por defecto. Se aceptan solo imágenes JPG y PNG de hasta 10 MB (413 si se supera, 400 si el
+archivo está vacío o es de otro tipo, 422 si no se puede leer la imagen, 503 si el OCR no está
+disponible); si el procesado falla, el archivo guardado se elimina. Pendiente: PDF, emisor, OCR asíncrono, MinIO, digitalización de ingresos.
 
 ## Estado actual
 
